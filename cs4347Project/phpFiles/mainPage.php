@@ -1,6 +1,21 @@
 <?php
-    session_start();
+  session_start();
+  require_once 'db_connect.php';
+  
+  $firstTime = false;
+  if(isset($_SESSION['user_id'])) {
+      $check = $conn->prepare("SELECT Genre1 FROM users WHERE UserID = ?");
+      $check->bind_param("i", $_SESSION['user_id']);
+      $check->execute();
+      $result = $check->get_result();
+      $data = $result->fetch_assoc();
+      
+      if($data['Genre1'] == NULL){
+        $firstTime = true;
+      }
+  }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -48,14 +63,14 @@
     .logo-text {
       font-family: 'Playfair Display', Georgia, serif;
       font-style: italic;
-      font-size: 1.1rem;
+      font-size: 2.0rem;
       color: var(--dark);
       letter-spacing: 0.01em;
     }
 
     .sign-in {
       font-family: 'EB Garamond', Georgia, serif;
-      font-size: 1.05rem;
+      font-size: 1.5rem;
       color: var(--dark);
       text-decoration: none;
       cursor: pointer;
@@ -65,9 +80,10 @@
 
     /*added welcome message*/
     .welcome {
-      margin-right: 10px;
-      font-size: 0.9rem;
-      color: #666;
+      margin-left: -20px;
+      font-family: 'EB Garamond', Georgia, serif;
+      font-size: 1.5rem;
+      color: var(--dark);
     }
 
     /* navigation bar links */
@@ -113,7 +129,7 @@
 
     .hero-left {
       max-width: 520px;
-      text-align: left;
+      text-align: center;
     }
 
     .hero-title {
@@ -154,24 +170,25 @@
 <body>
 
   <!-- logo and sign in at the top -->
-  <header class="top-bar">
-    <div style="width:80px"></div><!-- this keeps the logo centered -->
+ <header class="top-bar">
+    <div style="width:200px">
+        <?php
+            if (isset($_SESSION['user_id'])) {
+                echo "<span class='welcome'>Welcome, " . $_SESSION['fname'] . "</span>";
+            } 
+        ?>
+    </div>
 
     <span class="logo-text">The Lit Kit</span>
 
-    <!--php added made login dynamic-->
-     <div>
-    <?php
-        if (isset($_SESSION['user_id'])) {
-            echo "<span class='welcome'>Welcome, " . $_SESSION['fname'] . "</span> ";
-            echo "<a href='logout.php' class='sign-in'>Logout</a>";
-        } 
-        else {
-            echo "<a href='signIn.php' class='sign-in'>Sign in</a>";
-        }
-    ?>
-      </div>
-    </header>
+    <div style="width:200px; text-align:right;">
+        <?php
+            if (isset($_SESSION['user_id'])) {
+                echo "<a href='logout.php' class='sign-in'>Logout</a>";
+            }
+        ?>
+    </div>
+</header>
 
   <!-- nav links -->
   <nav>
@@ -183,8 +200,10 @@
   <!-- main section of the page -->
   <main class="hero">
     <div class="hero-left">
-      <h1 class="hero-title">Everything you need<br>to get back to<br>Literature</h1>
-      <a href="#" class="btn-start">Get Started</a>
+      <h1 class="hero-title">Everything you <br>need to get back to<br>Literature</h1>
+    <?php if($firstTime): ?>
+      <a href="preferences.php" class="btn-start">Get Started</a>
+    <?php endif; ?>
     </div>
 
   </main>

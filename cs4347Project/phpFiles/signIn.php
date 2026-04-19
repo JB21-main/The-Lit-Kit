@@ -1,50 +1,47 @@
 <?php
-    session_start();
+  session_start();
 
-    $error = '';
+  $error = '';
 
-    if($_SERVER["REQUEST_METHOD"] == "POST"){
-        
-    
-        $email = $_POST['email'];
-        $password = $_POST['password'];
+  if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-        //Database Connection
-        $conn = new mysqli('localhost', 'root', '','cs4347project');
-        if($conn->connect_error){
-            die('Connection Failed: '.$conn->connect_error);
-        }
-        else{
-        
-            //Grabbing email and storing result
-            $stmt = $conn->prepare("SELECT * FROM users WHERE Email = ?");
-            $stmt->bind_param("s", $email);
-            $stmt->execute();
-            $stmt_result = $stmt->get_result();
+    $email = $_POST['email'];
+    $inputPassword = $_POST['password'];
 
-            //Making sure email actually exists in DB
-            if($stmt_result-> num_rows > 0){
-            
-            //Grabbing password and verifying it matches password in DB
-            $data = $stmt_result->fetch_assoc();
-            if(password_verify($password, $data['Password'])){
-                $_SESSION['user_id'] = $data['UserID']; 
-                $_SESSION['email'] = $data['Email']; 
-                header("Location: mainPage.php"); exit();
-            }
-            
-            //Wrong Passwed display error
-            else{
-                $error = "Invalid Email or Password";
-            }
-        }
-        
-            //Email not found display error
-            else{
-                $error = "Invalid Email or Password";
-            }
-        }
+    // Connecting Database
+    require_once 'db_connect.php';
+
+    //Grabbing email and storing result
+    $stmt = $conn->prepare("SELECT * FROM users WHERE Email = ?");
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $stmt_result = $stmt->get_result();
+
+    //Making sure email actually exists in DB
+    if ($stmt_result->num_rows > 0) {
+
+      //Grabbing password and verifying it matches 
+      $data = $stmt_result->fetch_assoc();
+
+      if (password_verify($inputPassword, $data['Password'])) {
+          $_SESSION['user_id'] = $data['UserID'];
+          $_SESSION['email'] = $data['Email'];
+          $_SESSION['fname'] = $data['FName'];
+
+          header("Location: mainPage.php");
+          exit();
+      } 
+      //Wrong Password display error
+      else {
+            $error = "Invalid Email or Password";
+      }
+
+    } 
+    //Email not found display error
+    else {
+      $error = "Invalid Email or Password";
     }
+}
 ?>
 
 <!DOCTYPE html>
@@ -223,7 +220,7 @@
     <!-- right side has sign in form -->
     <div class="split-right">
       <div class="form-wrap">
-        <h1 class="form-title">Sign In</h1>
+        <h1 class="form-title">Sign In To Get Started!</h1>
 
         <!-- error message for invalid login -->
         <?php if (!empty($error)): ?>
@@ -245,7 +242,7 @@
 
 	<!-- submit button for signing in -->
         <button class="btn-signin">Sign in</button>
-        <p class="create-account">Don't have an account? <a href="createAccountInsert.php">Create Account</a></p>
+        <p class="create-account">Don't have an account? <a href="createAccount.php">Create Account</a></p>
       </div>
     </div>
 
