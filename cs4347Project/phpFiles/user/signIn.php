@@ -24,7 +24,7 @@
       $data = $stmt_result->fetch_assoc();
 
       if (password_verify($inputPassword, $data['Password'])) {
-          $_SESSION['user_id'] = $data['UserID'];
+          $_SESSION['user_id'] = $data['userID'];
           $_SESSION['email'] = $data['Email'];
           $_SESSION['fname'] = $data['FName'];
 

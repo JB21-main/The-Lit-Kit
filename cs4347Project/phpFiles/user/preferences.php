@@ -1,20 +1,43 @@
 <?php
     session_start();
 
+    // Redirect to login if they aren't actually logged in
+    if (!isset($_SESSION['user_id'])) {
+        header("Location: ../SignIn.php");
+        exit();
+    }
+
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $genre1 = $_POST['genre1'];
-        $genre2 = $_POST['genre2'];
-        $genre3 = $_POST['genre3'];
+      $user_id = $_SESSION['user_id'];
+      $newGenres = [$_POST['genre1'], $_POST['genre2'], $_POST['genre3']];
 
-        //Database Connection
-        require_once 'db_connect.php';
+      require_once 'db_connect.php';
 
-        $stmt = $conn->prepare("UPDATE users SET Genre1=?, Genre2=?, Genre3=? WHERE UserID=?");
-        $stmt->bind_param("sssi", $genre1, $genre2, $genre3, $_SESSION['user_id']);
-        $stmt->execute();
-        $stmt->close();
+      $deletePrefer = $conn->prepare("DELETE FROM prefers WHERE userID = ?");
+      $deletePrefer->bind_param("i", $user_id);
+      $deletePrefer->execute();
+      $deletePrefer->close();
+
+    // insert new prefer data
+      foreach($newGenres as $gName) {
+        if(!empty($gName)) {
+          $getGid = $conn->prepare("SELECT genreID FROM genres WHERE genreName = ?");
+          $getGid->bind_param("s", $gName);
+          $getGid->execute();
+          $result = $getGid->get_result();
+
+          if ($row = $result->fetch_assoc()) {
+              $gid = $row['genreID'];
+              $insert = $conn->prepare("INSERT INTO prefers (userID, genreID) VALUES (?, ?)");
+              $insert->bind_param("ii", $user_id, $gid);
+              $insert->execute();
+              $insert->close();
+          }
+          $getGid->close();
+        }
+    }
         $conn->close();
-
+        // Back to Main Page
         header("Location: mainPage.php");
         exit();
     }
@@ -216,16 +239,12 @@
           <div class="select-wrap">
             <select id="genre1" name="genre1">
               <option value="" disabled selected></option>
-              <option>Classic Literature</option>
-              <option>Romance</option>
-              <option>Mystery &amp; Thriller</option>
-              <option>Science Fiction</option>
-              <option>Fantasy</option>
-              <option>Historical Fiction</option>
-              <option>Literary Fiction</option>
-              <option>Poetry</option>
-              <option>Non-Fiction</option>
-              <option>Biography</option>
+              <option>Journalism</option>
+              <option>Film & Psychology</option>
+              <option>Feminist Literature</option>
+              <option>Media Theory</option>
+              <option>Philosophy</option>
+              <option>History</option>
             </select>
           </div>
         </div>
@@ -235,16 +254,12 @@
           <div class="select-wrap">
             <select id="genre2" name="genre2">
               <option value="" disabled selected></option>
-              <option>Classic Literature</option>
-              <option>Romance</option>
-              <option>Mystery &amp; Thriller</option>
-              <option>Science Fiction</option>
-              <option>Fantasy</option>
-              <option>Historical Fiction</option>
-              <option>Literary Fiction</option>
-              <option>Poetry</option>
-              <option>Non-Fiction</option>
-              <option>Biography</option>
+              <option>Journalism</option>
+              <option>Film & Psychology</option>
+              <option>Feminist Literature</option>
+              <option>Media Theory</option>
+              <option>Philosophy</option>
+              <option>History</option>
             </select>
           </div>
         </div>
@@ -254,16 +269,12 @@
           <div class="select-wrap">
             <select id="genre3" name="genre3">
               <option value="" disabled selected></option>
-              <option>Classic Literature</option>
-              <option>Romance</option>
-              <option>Mystery &amp; Thriller</option>
-              <option>Science Fiction</option>
-              <option>Fantasy</option>
-              <option>Historical Fiction</option>
-              <option>Literary Fiction</option>
-              <option>Poetry</option>
-              <option>Non-Fiction</option>
-              <option>Biography</option>
+              <option>Journalism</option>
+              <option>Film & Psychology</option>
+              <option>Feminist Literature</option>
+              <option>Media Theory</option>
+              <option>Philosophy</option>
+              <option>History</option>
             </select>
           </div>
         </div>

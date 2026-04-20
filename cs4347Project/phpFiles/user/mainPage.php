@@ -1,16 +1,17 @@
 <?php
   session_start();
   require_once 'db_connect.php';
-  
+  $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
+
   $firstTime = false;
-  if(isset($_SESSION['user_id'])) {
-      $check = $conn->prepare("SELECT Genre1 FROM users WHERE UserID = ?");
+  if($user_id) {
+      $check = $conn->prepare("SELECT COUNT(*) as total FROM prefers WHERE userID = ?");
       $check->bind_param("i", $_SESSION['user_id']);
       $check->execute();
       $result = $check->get_result();
       $data = $result->fetch_assoc();
       
-      if($data['Genre1'] == NULL){
+      if($data['total'] == NULL){
         $firstTime = true;
       }
   }
@@ -192,20 +193,31 @@
 
   <!-- nav links -->
   <nav>
-    <a href="#">Home</a>
+    <a href="index.php">Home</a>
     <a href="#">My Books</a>
-    <a href="#">Account</a>
+    
+    <div class="div-button">
+      <?php if (isset($_SESSION['user_id'])): ?>
+        <a href="user_account.php?id=<?php echo $user_id; ?>">
+          <button type="button">Account</button>
+        </a>
+      <?php else: ?>
+        <a href="SignIn.php">
+          <button type="button">Account</button>
+        </a>
+      <?php endif; ?> </div>
   </nav>
 
-  <!-- main section of the page -->
   <main class="hero">
     <div class="hero-left">
       <h1 class="hero-title">Everything you <br>need to get back to<br>Literature</h1>
-    <?php if($firstTime): ?>
-      <a href="preferences.php" class="btn-start">Get Started</a>
-    <?php endif; ?>
+      
+      <?php if (!$user_id): ?>
+        <a href="createAccount.php" class="btn-start">Get Started</a>
+      <?php elseif ($firstTime): ?>
+        <a href="preferences.php" class="btn-start">Get Started</a>
+      <?php endif; ?>
     </div>
-
   </main>
 
 </body>
