@@ -3,14 +3,12 @@
 
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-      //Variables to hold inputted info
       $fname = $_POST['fname'];
       $lname = $_POST['lname'];
       $email = $_POST['email'];
       $hashPassword = password_hash($_POST['password'], PASSWORD_DEFAULT);
       $role = 'user';
 
-      //Database Connection
       require_once 'db_connect.php'; 
 
       // Checking if email already used
@@ -25,15 +23,18 @@
     
       else{
         //Inserts info into table
-        $stmt = $conn->prepare("INSERT INTO users(fname, lname, email, password,role) VALUES(?,?,?,?,?)");
+        $stmt = $conn->prepare("INSERT INTO users(FName, LName, Email, password, role) VALUES(?,?,?,?,?)");
         $stmt->bind_param("sssss", $fname, $lname, $email, $hashPassword, $role);
-        $stmt->execute();
-        $stmt->close();
-        $conn->close();
-
-        //Verification Message
-        header("Location: SignIn.php");
-        exit();
+        if($stmt->execute()) {
+          $stmt->close();
+          $conn->close();
+          //Verification Message
+          header("Location: SignIn.php");
+          exit();
+        }
+        else {
+          $error = "Error: " . $stmt->error;
+        }
       }
     }
 ?>
