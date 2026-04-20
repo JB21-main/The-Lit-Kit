@@ -79,7 +79,7 @@ if (isset($_POST['delete_acc'])) {
 <head>
     <meta charset="UTF-8">
     <title>Update Account</title>
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../../css/style.css">
 </head>
 <body class="centered-body">
 
