@@ -1,0 +1,263 @@
+<?php
+require_once 'db_connect.php';
+
+session_start();
+
+if (!isset($_SESSION['user_id'])) {
+    header("Location: signIn.php");
+    exit();
+}
+
+$current_user_id = $_SESSION['user_id'];
+
+$rec_sql = "SELECT b.mmsID, b.Title, a.authorName, COUNT(bl.logID) as popularity
+            FROM books b
+            JOIN author a ON b.authorID = a.authorID
+            JOIN book_genre bg ON b.mmsID = bg.mmsID
+            JOIN prefers p ON bg.genreID = p.genreID
+            LEFT JOIN book_log bl ON b.mmsID = bl.mmsID 
+            WHERE p.userID = ?
+            GROUP BY b.mmsID
+            ORDER BY popularity DESC
+            LIMIT 3";
+
+$stmt = $conn->prepare($rec_sql);
+$stmt->bind_param("i", $current_user_id);
+$stmt->execute();
+$recommendations = $stmt->get_result();
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>The Lit Kit — My Books</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=EB+Garamond:wght@400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --dark: #1a1a1a;
+      --border: #e0e0e0;
+      --bg: #f5f3f0;
+      --white: #ffffff;
+      --card: #d9d9d9;
+    }
+
+    body {
+      font-family: 'EB Garamond', Georgia, serif;
+      background: var(--bg);
+      color: var(--dark);
+      min-height: 100vh;
+    }
+
+    /* top header with user menu */
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 50px;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      position: relative;
+    }
+
+    .logo { text-decoration: none; }
+    .logo-text {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-style: italic;
+      font-size: 1.2rem;
+      color: var(--dark);
+    }
+
+    .user-menu {
+      position: relative;
+    }
+
+    .user-trigger {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      font-family: 'EB Garamond', Georgia, serif;
+      font-size: 1.1rem;
+      color: var(--dark);
+      background: none;
+      border: none;
+      padding: 6px 10px;
+      border-radius: 4px;
+      transition: background 0.15s;
+      user-select: none;
+    }
+    .user-trigger:hover { background: rgba(0,0,0,0.05); }
+
+    .chevron {
+      font-size: 0.65rem;
+      margin-top: 1px;
+      transition: transform 0.2s;
+    }
+    .user-menu.open .chevron { transform: rotate(180deg); }
+
+    /* dropdown menu styling */
+    .dropdown {
+      display: none;
+      position: absolute;
+      top: calc(100% + 8px);
+      right: 0;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      min-width: 170px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+      overflow: hidden;
+      z-index: 100;
+    }
+    .user-menu.open .dropdown { display: block; }
+
+    .dropdown a {
+      display: block;
+      padding: 13px 20px;
+      font-family: 'EB Garamond', Georgia, serif;
+      font-size: 1.05rem;
+      color: var(--dark);
+      text-decoration: none;
+      transition: background 0.15s;
+    }
+    .dropdown a:hover { background: #f5f3f0; }
+    .dropdown a.danger { color: #b91c1c; }
+    .dropdown hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 0;
+    }
+
+    /* navigation bar */
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 120px;
+      padding: 14px 0;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+    }
+
+    nav a {
+      font-family: 'EB Garamond', Georgia, serif;
+      font-size: 1.05rem;
+      color: var(--dark);
+      text-decoration: none;
+      letter-spacing: 0.02em;
+      padding-bottom: 4px;
+      border-bottom: 2px solid transparent;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    nav a:hover { color: #2d6a4f; }
+    nav a.active { border-bottom: 2px solid var(--dark); }
+
+    .content {
+      padding: 40px 50px;
+    }
+
+    .section { margin-bottom: 48px; }
+
+    .section-title {
+      font-family: 'EB Garamond', Georgia, serif;
+      font-size: 1.4rem;
+      font-weight: 500;
+      color: var(--dark);
+      margin-bottom: 18px;
+    }
+
+    /* book cards layout */
+    .book-row {
+      display: flex;
+      gap: 24px;
+    }
+
+    .book-card {
+      width: 150px;
+      height: 200px;
+      background: var(--card);
+      border-radius: 4px;
+      flex-shrink: 0;
+      transition: transform 0.2s, box-shadow 0.2s;
+      cursor: pointer;
+    }
+    .book-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- logo at the top and user menu -->
+  <header class="top-bar">
+    <div style="width: 100px"></div>
+
+    <a href="#" class="logo">
+      <span class="logo-text">The Lit Kit</span>
+    </a>
+
+    <!-- dropdown when you click the name -->
+    <div class="user-menu" id="userMenu">
+      <button class="user-trigger" onclick="toggleMenu()">
+        <?php echo $_SESSION['fname'] . ' ' . $_SESSION['lname']; ?>
+        <span class="chevron">▼</span>
+      </button>
+      <div class="dropdown">
+        <a href="#">My Profile</a>
+        <a href="#">Account Settings</a>
+        <a href="#">My Books</a>
+        <hr/>
+        <a href="#" class="danger">Sign Out</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- nav links -->
+  <nav>
+    <a href="mainPage.php">Home</a>
+    <a href="#" class="active">My Books</a>
+    <a href="#">Account</a>
+  </nav>
+
+  <!-- book sections -->
+  <main class="content">
+
+    <div class="section">
+      <p class="section-title">Popular in Your Favorite Genres</p>
+      <div class="book-row">
+        <?php while($row = $recommendations->fetch_assoc()): ?>
+        <a href="book_info.php?id=<?php echo $row['mmsID']; ?>" class="book-card-link">
+                <div class="book-card">
+                    <div style="padding: 15px; color: #1a1a1a;">
+                        <strong style="display: block; font-size: 1rem;"><?php echo htmlspecialchars($row['Title']); ?></strong>
+                        <span style="font-size: 0.85rem; font-style: italic;">by <?php echo htmlspecialchars($row['authorName']); ?></span>
+                    </div>
+                </div>
+            </a>
+        <?php endwhile; ?>
+    </div>
+</div>
+
+  </main>
+
+  <script>
+    // Added JavaScript to make dropdown interactive
+    function toggleMenu() {
+      document.getElementById('userMenu').classList.toggle('open');
+    }
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function(e) {
+      const menu = document.getElementById('userMenu');
+      if (!menu.contains(e.target)) {
+        menu.classList.remove('open');
+      }
+    });
+  </script>
+
+</body>
+</html>

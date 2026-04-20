@@ -1,0 +1,144 @@
+.junge-regular {
+  font-family: "Junge", cursive;
+  font-weight: 400;
+  font-style: normal;
+}
+.lato-light {
+  font-family: "Lato", sans-serif;
+  font-weight: 300;
+  font-style: normal;
+}
+
+.lato-regular {
+  font-family: "Lato", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+/* TO-DO: finish converting elements to be responsive (rem)*/
+/*For most content to the side*/
+body {
+  background-color: white;
+  padding: 25px;
+  display: flex;
+  height: 100vh;
+}
+/*For centered content, like update acct*/
+.centered-body {
+  display: flex;
+  background-color: white;
+  align-items: center;
+  height: 100vh;
+  margin: 0 auto;
+  max-width: 300px;
+  flex-direction: column;
+}
+footer {
+  padding: 20px;
+}
+
+h1 {
+  font-family: "Junge";
+  font-size: 2.5rem;
+  font-weight: 400;
+}
+
+h2 {
+  font-family: "Junge";
+  font-weight: 400;
+}
+
+h3 {
+  font-family: "Lato";
+  font-weight: 390;
+}
+p {
+  font-family: "Lato";
+  font-weight: 400;
+}
+/*styling for labels for textbox and dropdown*/
+label {
+  font-family: "Lato";
+  font-weight: 390;
+  display: block;
+  margin-bottom: 5px;
+}
+/*styling for text boxes*/
+input {
+  font-family: "Lato";
+  font-weight: 300;
+  width: 250px;
+  height: 25px;
+  padding: 2px 2px 2px 10px;
+  margin-bottom: 10px;
+
+  border-radius: 5px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #aeaeae;
+  /*width: 100%;
+  max-width: 15.625rem;
+  box-sizing: border-box;*/
+}
+/*styling for dropdowns*/
+select {
+  font-family: "Lato";
+  font-weight: 300;
+  width: 100%;
+  box-sizing: border-box; /*prevent adding extra width on top of 100%*/
+  height: 25px;
+  padding: 2px 2px 2px 10px; /*10 px for left margin*/
+  margin-bottom: 10px;
+  max-width: 15.625rem;
+
+  border-radius: 5px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #aeaeae;
+}
+/*for general layouts with a div that has a border*/
+.div-border {
+  width: 100%;
+  border-radius: 5px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #aeaeae;
+  padding: 20px 70px;
+  background-color: white;
+  margin-bottom: 20px;
+}
+.div-button {
+  display: flex;
+  justify-content: center;
+}
+
+button {
+  /*button styling*/
+  font-family: "Lato";
+  font-weight: 300;
+  background-color: black;
+  color: white;
+  border: none;
+  border-radius: 5px;
+
+  /*layout*/
+  padding: 0.625rem clamp(0.75rem, 2vw, 1.0625rem);
+  margin: 0.1rem 0;
+  align-items: center;
+}
+
+.delete-button {
+  /*button styling*/
+  font-family: "Lato";
+  font-weight: 300;
+  background-color: #c4000a;
+  color: white;
+  border: none;
+  border-radius: 5px;
+
+  /*layout*/
+  padding: 0.625rem clamp(0.75rem, 2vw, 1.0625rem);
+  margin: 1rem 0;
+  align-items: center;
+
+}

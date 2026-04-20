@@ -1,0 +1,223 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --dark: #1a1a1a;
+  --border: #e0e0e0;
+  --bg: #f5f3f0;
+  --card: #d9d9d9;
+}
+
+body {
+  font-family: "EB Garamond", Georgia, serif;
+  background: var(--bg);
+  color: var(--dark);
+  min-height: 100vh;
+}
+
+/* header with user dropdown */
+.top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 50px;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+}
+
+.logo {
+  text-decoration: none;
+}
+.logo-text {
+  font-family: "Playfair Display", Georgia, serif;
+  font-style: italic;
+  font-size: 1.2rem;
+  color: var(--dark);
+}
+
+.user-menu {
+  position: relative;
+}
+
+.user-trigger {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-family: "EB Garamond", Georgia, serif;
+  font-size: 1.1rem;
+  color: var(--dark);
+  background: none;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 4px;
+  transition: background 0.15s;
+  user-select: none;
+}
+.user-trigger:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.chevron {
+  font-size: 0.65rem;
+  margin-top: 1px;
+  transition: transform 0.2s;
+}
+.user-menu.open .chevron {
+  transform: rotate(180deg);
+}
+
+.dropdown {
+  display: none;
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  min-width: 170px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  z-index: 100;
+}
+.user-menu.open .dropdown {
+  display: block;
+}
+
+.dropdown a {
+  display: block;
+  padding: 13px 20px;
+  font-family: "EB Garamond", Georgia, serif;
+  font-size: 1.05rem;
+  color: var(--dark);
+  text-decoration: none;
+  transition: background 0.15s;
+}
+.dropdown a:hover {
+  background: #f5f3f0;
+}
+.dropdown a.danger {
+  color: #b91c1c;
+}
+.dropdown hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 0;
+}
+
+/* navigation bar */
+nav {
+  display: flex;
+  justify-content: center;
+  gap: 120px;
+  padding: 14px 0;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+}
+
+nav a {
+  font-family: "EB Garamond", Georgia, serif;
+  font-size: 1.05rem;
+  color: var(--dark);
+  text-decoration: none;
+  letter-spacing: 0.02em;
+  padding-bottom: 4px;
+  border-bottom: 2px solid transparent;
+  transition:
+    border-color 0.2s,
+    color 0.2s;
+}
+nav a:hover {
+  color: #2d6a4f;
+}
+nav a.active {
+  border-bottom: 2px solid var(--dark);
+}
+
+.content {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 70px 60px;
+}
+
+/* layout for book detail page */
+.book-layout {
+  display: flex;
+  gap: 70px;
+  align-items: flex-start;
+}
+
+.book-left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  flex-shrink: 0;
+}
+
+.book-cover {
+  width: 240px;
+  height: 310px;
+  background: var(--card);
+  border-radius: 4px;
+}
+
+.book-info {
+  font-size: 1.25rem;
+  color: #666;
+  text-align: center;
+}
+
+.book-right {
+  flex: 1;
+}
+
+.book-title {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 3.2rem;
+  font-weight: 400;
+  color: var(--dark);
+  margin-bottom: 36px;
+  line-height: 1.2;
+}
+
+.book-desc {
+  font-size: 1.35rem;
+  line-height: 1.8;
+  color: var(--dark);
+  margin-bottom: 28px;
+}
+
+.btn-wrap {
+  display: flex;
+  justify-content: center;
+  margin-top: 70px;
+}
+
+/* add button styling */
+.btn-add {
+  background: var(--dark);
+  color: #fff;
+  font-family: "EB Garamond", Georgia, serif;
+  font-size: 1.3rem;
+  letter-spacing: 0.04em;
+  padding: 18px 64px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition:
+    background 0.2s,
+    transform 0.15s;
+}
+.btn-add:hover {
+  background: #333;
+  transform: translateY(-1px);
+}
+.btn-add:active {
+  transform: translateY(0);
+}
