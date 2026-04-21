@@ -197,14 +197,10 @@
   <nav>
     <a href="mainPage.php">Home</a>
     <a href="book_rec.php">My Books</a>
-      <div class="div-button">
-      <?php if (isset($_SESSION['user_id'])): ?>
-        <a href="user_account.php?id=<?php echo $user_id; ?>">
-          <button type="button">Account</button>
-        </a>
+    <?php if (isset($_SESSION['user_id'])): ?>
+        <a href="user_account.php?id=<?php echo $user_id; ?>">Account</a>
       <?php else: ?>
         <a href="SignIn.php">
-          <button type="button">Account</button>
         </a>
       <?php endif; ?> </div>
   </nav>

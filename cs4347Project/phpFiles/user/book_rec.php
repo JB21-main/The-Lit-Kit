@@ -1,14 +1,14 @@
 <?php
-include 'db_connect.php';
-
 session_start();
+
+include 'db_connect.php';
 
 if (!isset($_SESSION['user_id'])) {
     header("Location: signIn.php");
     exit();
 }
-
-$current_user_id = $_SESSION['user_id'];
+//book rec id is not connecting to user id, fix and check
+$user_id = $_SESSION['user_id'];
 
 $rec_sql = "SELECT b.mmsID, b.Title, a.authorName, COUNT(bl.logID) as popularity
             FROM books b
@@ -17,12 +17,12 @@ $rec_sql = "SELECT b.mmsID, b.Title, a.authorName, COUNT(bl.logID) as popularity
             JOIN prefers p ON bg.genreID = p.genreID
             LEFT JOIN book_log bl ON b.mmsID = bl.mmsID 
             WHERE p.userID = ?
-            GROUP BY b.mmsID
-            ORDER BY popularity DESC
+            GROUP BY b.mmsID, b.Title, a.authorName
+            ORDER BY popularity DESC, b.Title ASC
             LIMIT 3";
 
 $stmt = $conn->prepare($rec_sql);
-$stmt->bind_param("i", $current_user_id);
+$stmt->bind_param("i", $user_id);
 $stmt->execute();
 $recommendations = $stmt->get_result();
 ?>
@@ -220,7 +220,11 @@ $recommendations = $stmt->get_result();
   <nav>
     <a href="mainPage.php">Home</a>
     <a href="#" class="active">My Books</a>
-    <a href="#">Account</a>
+    <?php if ($user_id): ?>
+        <a href="user_account.php?id=<?php echo $user_id; ?>">Account</a>
+    <?php else: ?>
+        <a href="SignIn.php">Account</a>
+    <?php endif; ?>
   </nav>
 
   <!-- book sections -->
