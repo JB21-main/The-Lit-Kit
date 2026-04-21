@@ -33,7 +33,7 @@ $recommendations = $stmt->get_result();
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>The Lit Kit — My Books</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=EB+Garamond&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=EB+Garamond:wght@400;500&display=swap" rel="stylesheet"/>
 
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -63,12 +63,14 @@ body {
 
 .logo-text {
   font-family: 'Playfair Display', Georgia, serif;
-  font-style: italic;
-  font-size: 2rem;
+    font-style: italic;
+    font-size: 2.0rem;
+    color: var(--dark);
+    letter-spacing: 0.01em;
 }
 
 .logout-link {
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   color: var(--dark);
   text-decoration: none;
   transition: color 0.2s;
@@ -78,25 +80,37 @@ body {
   color: var(--crimson);
 }
 
-/* nav */
-nav {
-  display: flex;
-  justify-content: center;
-  gap: 120px;
-  padding: 14px 0;
-  border-bottom: 1px solid var(--border);
-}
+    /* navigation bar links */
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 100px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border);
+    }
 
-nav a {
-  font-size: 1.05rem;
-  color: var(--dark);
-  text-decoration: none;
-  padding-bottom: 4px;
-  border-bottom: 2px solid transparent;
-}
+    nav a {
+      font-family: 'EB Garamond', Georgia, serif;
+      font-size: 1.05rem;
+      color: var(--dark);
+      text-decoration: none;
+      letter-spacing: 0.02em;
+      position: relative;
+      transition: color 0.2s;
+    }
 
-nav a:hover { color: #2d6a4f; }
-nav a.active { border-bottom: 2px solid var(--dark); }
+    nav a::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: var(--crimson);
+      transition: width 0.25s ease;
+    }
+    nav a:hover { color: var(--crimson); }
+    nav a:hover::after { width: 100%; }
 
 .content {
   padding: 40px 50px;
@@ -142,7 +156,7 @@ nav a.active { border-bottom: 2px solid var(--dark); }
 
 <nav>
   <a href="mainPage.php">Home</a>
-  <a href="#" class="active">My Books</a>
+  <a href="book_rec.php">My Books</a>
 
   <?php if ($user_id): ?>
     <a href="user_account.php?id=<?php echo $user_id; ?>">Account</a>

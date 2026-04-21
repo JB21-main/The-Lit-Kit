@@ -137,3 +137,14 @@ button {
 .center-title {
   text-align: center;
 }
+
+.logout-link {
+  font-size: 1.2rem;
+  color: var(--dark);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.logout-link:hover {
+  color: var(--crimson);
+}

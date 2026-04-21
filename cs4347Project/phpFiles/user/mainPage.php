@@ -126,7 +126,7 @@
       align-items: center;
       justify-content: center;
       padding: 80px 40px;
-      min-height: calc(100vh - 130px);
+      min-height: calc(100vh - 160px);
     }
 
     .hero-left {
