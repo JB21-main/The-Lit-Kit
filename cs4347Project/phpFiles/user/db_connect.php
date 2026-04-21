@@ -1,4 +1,3 @@
-<<<<<<< HEAD:cs4347ProjectFrontEnd/phpFiles/db_connect.php
 <?php
 $servername = "localhost";
 $username = "root";

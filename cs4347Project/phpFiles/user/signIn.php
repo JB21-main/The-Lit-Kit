@@ -28,8 +28,15 @@
           $_SESSION['email'] = $data['Email'];
           $_SESSION['fname'] = $data['FName'];
           $_SESSION['lname'] = $data['LName'];
+          $_SESSION['Role'] = $data['Role'];
 
-          header("Location: mainPage.php");
+      if ($_SESSION['Role'] === 'admin') {
+              // Go UP one level, then into admin *currently make manage_book as a placeholder*
+              header("Location: ../admin/manage_books.php");
+          } else {
+              header("Location: mainPage.php");
+          }
+
           exit();
       } 
       //Wrong Password display error

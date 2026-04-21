@@ -3,8 +3,11 @@ if(session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
-    header("Location: mainPage.php?error=access_denied");
+if (!isset($_SESSION['Role']) || $_SESSION['Role'] !== 'admin') {
+    // If not admin, send them back to the user login/main page
+    // Path: UP from admin, DOWN into user
+    header("Location: ../user/signIn.php?error=unauthorized");
     exit();
 }
+?>
 ?>
