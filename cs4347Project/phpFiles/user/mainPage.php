@@ -126,7 +126,7 @@
       align-items: center;
       justify-content: center;
       padding: 80px 40px;
-      min-height: calc(100vh - 130px);
+      min-height: calc(100vh - 160px);
     }
 
     .hero-left {
@@ -196,7 +196,7 @@
   <nav>
     <a href="mainPage.php">Home</a>
     <a href="book_rec.php">My Books</a>
-    <a href="#">Account</a>
+    <a href="user_account.php">Account</a>
   </nav>
 
   <!-- main section of the page -->

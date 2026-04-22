@@ -43,38 +43,29 @@ while($book_genre = $genre_result->fetch_assoc()) {
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Junge&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../css/user-book-info.css">
+    <link rel="stylesheet" href="../../css/user-book-info.css">
     <!---->
 </head>
 <body>
 
-  <!-- logo at the top and user menu -->
-  <header class="top-bar">
-    <div style="width:100px"></div>
+<header class="top-bar">
+  <div style="width:200px;"></div>
 
-    <a href="#" class="logo">
-      <span class="logo-text">The Lit Kit</span>
-    </a>
+  <span class="logo-text">The Lit Kit</span>
 
-    <div class="user-menu" id="userMenu">
-      <button class="user-trigger" onclick="toggleMenu()">
-        Jane Doe <span class="chevron">▼</span>
-      </button>
-      <div class="dropdown">
-        <a href="#">My Profile</a>
-        <a href="#">Account Settings</a>
-        <a href="#">My Books</a>
-        <hr/>
-        <a href="#" class="danger">Sign Out</a>
-      </div>
-    </div>
-  </header>
+  <div style="width:200px; text-align:right;">
+    <a href="logout.php" class="logout-link">Logout</a>
+  </div>
+</header>
+
+
+
 
   <!-- nav links -->
   <nav>
-    <a href="#">Home</a>
-    <a href="#" class="active">My Books</a>
-    <a href="#">Account</a>
+    <a href="mainPage.php">Home</a>
+    <a href="book_rec.php">My Books</a>
+    <a href="user_account.php">Account</a>
   </nav>
 
   <!-- book detail section -->

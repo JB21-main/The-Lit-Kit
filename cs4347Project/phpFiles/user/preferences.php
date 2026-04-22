@@ -84,7 +84,7 @@
     .logo-text {
       font-family: 'Playfair Display', Georgia, serif;
       font-style: italic;
-      font-size: 1.2rem;
+      font-size: 2.0rem;
       color: var(--dark);
       letter-spacing: 0.01em;
     }
@@ -205,7 +205,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: white;
+      background: #f0ece6;
       color: #aaa;
       font-family: 'EB Garamond', Georgia, serif;
       font-size: 1.3rem;
@@ -238,16 +238,12 @@
           <div class="select-wrap">
             <select id="genre1" name="genre1" required>
               <option value="" disabled selected></option>
-              <option>Classic Literature</option>
-              <option>Romance</option>
-              <option>Mystery &amp; Thriller</option>
-              <option>Science Fiction</option>
-              <option>Fantasy</option>
-              <option>Historical Fiction</option>
-              <option>Literary Fiction</option>
-              <option>Poetry</option>
-              <option>Non-Fiction</option>
-              <option>Biography</option>
+              <option>Journalism</option>
+              <option>Film & Psychology</option>
+              <option>Feminist Literature</option>
+              <option>Media Theory</option>
+              <option>Philosophy</option>
+              <option>History</option>
             </select>
           </div>
         </div>
@@ -257,16 +253,12 @@
           <div class="select-wrap">
             <select id="genre2" name="genre2" required>
               <option value="" disabled selected></option>
-              <option>Classic Literature</option>
-              <option>Romance</option>
-              <option>Mystery &amp; Thriller</option>
-              <option>Science Fiction</option>
-              <option>Fantasy</option>
-              <option>Historical Fiction</option>
-              <option>Literary Fiction</option>
-              <option>Poetry</option>
-              <option>Non-Fiction</option>
-              <option>Biography</option>
+              <option>Journalism</option>
+              <option>Film & Psychology</option>
+              <option>Feminist Literature</option>
+              <option>Media Theory</option>
+              <option>Philosophy</option>
+              <option>History</option>
             </select>
           </div>
         </div>
@@ -276,16 +268,12 @@
           <div class="select-wrap">
             <select id="genre3" name="genre3" required>
               <option value="" disabled selected></option>
-              <option>Classic Literature</option>
-              <option>Romance</option>
-              <option>Mystery &amp; Thriller</option>
-              <option>Science Fiction</option>
-              <option>Fantasy</option>
-              <option>Historical Fiction</option>
-              <option>Literary Fiction</option>
-              <option>Poetry</option>
-              <option>Non-Fiction</option>
-              <option>Biography</option>
+              <option>Journalism</option>
+              <option>Film & Psychology</option>
+              <option>Feminist Literature</option>
+              <option>Media Theory</option>
+              <option>Philosophy</option>
+              <option>History</option>
             </select>
           </div>
         </div>
@@ -295,8 +283,8 @@
       </div>
     </div>
 
-    <!-- image on the right -->
-    <div class="split-right"><img src="../../images/librairie-romantique-1600.jpg" style="width:100%;"></div>
+    <!-- image goes here on the right -->
+    <div class="split-right">[ IMAGE ]</div>
 
   </div>
   <script>

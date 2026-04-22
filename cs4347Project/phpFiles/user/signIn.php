@@ -24,7 +24,7 @@
       $data = $stmt_result->fetch_assoc();
 
       if (password_verify($inputPassword, $data['Password'])) {
-          $_SESSION['user_id'] = $data['UserID'];
+          $_SESSION['user_id'] = $data['userID'];
           $_SESSION['email'] = $data['Email'];
           $_SESSION['fname'] = $data['FName'];
           $_SESSION['lname'] = $data['LName'];
@@ -87,7 +87,7 @@
     .logo-text {
       font-family: 'Playfair Display', Georgia, serif;
       font-style: italic;
-      font-size: 1.2rem;
+      font-size: 2.0rem;
       color: var(--dark);
       letter-spacing: 0.01em;
     }
@@ -216,7 +216,7 @@
   <div class="split">
 
     <!-- left side for the image -->
-    <div class="split-left"><img src="../../images/art-literature-1600.jpg" style="width:100%;"></div>
+    <div class="split-left">[ IMAGE ]</div>
 
     <!-- right side has sign in form -->
     <div class="split-right">

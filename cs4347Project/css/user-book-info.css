@@ -11,6 +11,7 @@
   --border: #e0e0e0;
   --bg: #f5f3f0;
   --card: #d9d9d9;
+  --crimson: #b91c1c;
 }
 
 body {
@@ -25,7 +26,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 14px 50px;
+  padding: 18px 60px;
   background: var(--bg);
   border-bottom: 1px solid var(--border);
 }
@@ -36,7 +37,7 @@ body {
 .logo-text {
   font-family: "Playfair Display", Georgia, serif;
   font-style: italic;
-  font-size: 1.2rem;
+  font-size: 2.0rem;
   color: var(--dark);
 }
 
@@ -114,30 +115,34 @@ body {
 nav {
   display: flex;
   justify-content: center;
-  gap: 120px;
+  gap: 100px;
   padding: 14px 0;
   background: var(--bg);
   border-bottom: 1px solid var(--border);
 }
 
-nav a {
-  font-family: "EB Garamond", Georgia, serif;
-  font-size: 1.05rem;
-  color: var(--dark);
-  text-decoration: none;
-  letter-spacing: 0.02em;
-  padding-bottom: 4px;
-  border-bottom: 2px solid transparent;
-  transition:
-    border-color 0.2s,
-    color 0.2s;
-}
-nav a:hover {
-  color: #2d6a4f;
-}
-nav a.active {
-  border-bottom: 2px solid var(--dark);
-}
+    nav a {
+      font-family: 'EB Garamond', Georgia, serif;
+      font-size: 1.05rem;
+      color: var(--dark);
+      text-decoration: none;
+      letter-spacing: 0.02em;
+      position: relative;
+      transition: color 0.2s;
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: var(--crimson);
+      transition: width 0.25s ease;
+    }
+    nav a:hover { color: var(--crimson); }
+    nav a:hover::after { width: 100%; }
 
 .content {
   max-width: 900px;
@@ -220,4 +225,15 @@ nav a.active {
 }
 .btn-add:active {
   transform: translateY(0);
+}
+
+.logout-link {
+  font-size: 1.5rem;
+  color: var(--dark);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.logout-link:hover {
+  color: var(--crimson);
 }
