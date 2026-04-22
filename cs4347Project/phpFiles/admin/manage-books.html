@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Books</title>
+</head>
+<body>
+    <!--div with title and search bar TODO: move search bar to right-->
+    <div>
+        <h1>Manage Books:</h1>
+        <input type="text" id="book-search" placeholder="Search by title, id, or author..">
+    </div>
+    <!--list of books- has placeholders for now-->
+    <div class="book-list-container">
+        <table class="book-table">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Genre</th>
+                    <th>Inventory</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody class="book-list">
+                <tr>
+                    <td>The Lord of the Rings</td>
+                    <td>JRR Tolkien</td>
+                     <td>Science Fiction & Fantasy</td>
+                     <td>10</td>
+                     <td>
+                        <button>Edit</button>
+                        <button>Delete</button>
+                     </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    
+</body>
+</html>

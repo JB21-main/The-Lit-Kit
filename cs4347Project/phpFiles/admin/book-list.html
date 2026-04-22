@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!--links for fonts and style sheet-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Junge&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/style.css">
+    <!---->
+    <script src="https://kit.fontawesome.com/c00cc4f5f4.js" crossorigin="anonymous"></script>
+    <title>Book List</title>
+</head>
+<body>
+    <div class="col-container">
+    <!--heading and search bar container-->
+    <div class="horiz-spaced-div">
+        <h1>Book List</h1>
+        <div class = "center-container">
+            <form action="/replace-me.php">
+                <label for="gsearch"></label>
+                <input class= "search-input" type="search" id="gsearch" name="gsearch">
+                <input class= "search-button" type="submit">
+            </form>
+        </div>
+    </div>
+    <!--list of books container-->
+    <div>
+        <table class="book-table">
+        <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Genre</th>
+            <th>Edit</th>
+            <th>View</th>
+        </tr>
+        <tr>
+            <td>12345</td>
+            <td>The Lord of the Rings</td>
+            <td>JRR Tolkien</td>
+            <td>Science Fiction & Fantasy</td>
+            <td><button class="table-view-button"><i class="fa-solid fa-pen-to-square"></i></button></td>
+            <td><button class="table-view-button"><i class="fa-solid fa-chevron-right"></i></button></td>
+        </tr>
+         <tr>
+            <td>56789</td>
+            <td>Pride and Prejudice</td>
+            <td>Jane Austen</td>
+            <td>Classics</td>
+            <td><button class="table-view-button"><i class="fa-solid fa-pen-to-square"></i></button></td>
+            <td><button class="table-view-button"><i class="fa-solid fa-chevron-right"></i></button></td>
+            
+        </tr>
+    </table>
+    </div>
+    
+    </div>
+</body>
+</html>
