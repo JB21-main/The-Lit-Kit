@@ -2,10 +2,9 @@
   session_start();
   require_once 'db_connect.php';
 
-  $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
   $firstTime = true;
 
-  if ($user_id) {
+  if (isset($_SESSION['user_id'])) {
 
     $check = $conn->prepare("SELECT * FROM prefers WHERE userID = ?");
     $check->bind_param("i", $_SESSION['user_id']);
@@ -127,7 +126,7 @@
       align-items: center;
       justify-content: center;
       padding: 80px 40px;
-      min-height: calc(100vh - 130px);
+      min-height: calc(100vh - 160px);
     }
 
     .hero-left {
@@ -197,14 +196,10 @@
   <nav>
     <a href="mainPage.php">Home</a>
     <a href="book_rec.php">My Books</a>
-    <?php if (isset($_SESSION['user_id'])): ?>
-        <a href="user_account.php?id=<?php echo $user_id; ?>">Account</a>
-      <?php else: ?>
-        <a href="SignIn.php">
-        </a>
-      <?php endif; ?> </div>
+    <a href="user_account.php">Account</a>
   </nav>
 
+  <!-- main section of the page -->
   <main class="hero">
     <div class="hero-left">
       <h1 class="hero-title">Everything you <br>need to get back to<br>Literature</h1>
@@ -217,6 +212,7 @@
       <a href="book_rec.php" class="btn-start">Go to Recommendations</a>
     <?php endif; ?>
     </div>
+
   </main>
 
 </body>

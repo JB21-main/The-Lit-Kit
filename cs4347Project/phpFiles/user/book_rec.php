@@ -1,13 +1,12 @@
 <?php
+require_once 'db_connect.php';
 session_start();
-
-include 'db_connect.php';
 
 if (!isset($_SESSION['user_id'])) {
     header("Location: signIn.php");
     exit();
 }
-//book rec id is not connecting to user id, fix and check
+
 $user_id = $_SESSION['user_id'];
 
 $rec_sql = "SELECT b.mmsID, b.Title, a.authorName, COUNT(bl.logID) as popularity
@@ -30,58 +29,62 @@ $recommendations = $stmt->get_result();
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>The Lit Kit — My Books</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=EB+Garamond&display=swap" rel="stylesheet"/>
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>The Lit Kit — My Books</title>
 
-    :root {
-      --dark: #1a1a1a;
-      --border: #e0e0e0;
-      --bg: #f5f3f0;
-      --card: #d9d9d9;
-      --crimson: #b91c1c;
-    }
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=EB+Garamond:wght@400;500&display=swap" rel="stylesheet"/>
 
-    body {
-      font-family: 'EB Garamond', Georgia, serif;
-      background: var(--bg);
-      color: var(--dark);
-    }
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    /* header */
-    .top-bar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 18px 60px;
-      border-bottom: 1px solid var(--border);
-    }
+:root {
+  --dark: #1a1a1a;
+  --border: #e0e0e0;
+  --bg: #f5f3f0;
+  --card: #d9d9d9;
+  --crimson: #b91c1c;
+}
 
-    .logo-text {
-      font-family: 'Playfair Display', Georgia, serif;
-      font-style: italic;
-      font-size: 2.0rem;
-    }
+body {
+  font-family: 'EB Garamond', Georgia, serif;
+  background: var(--bg);
+  color: var(--dark);
+}
 
-    .logout_link {
-      font-size: 1.5rem;
-      color: var(--dark);
-      text-decoration: none;
-      transition: color 0.2s;
-    }
+/* header */
+.top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 60px;
+  border-bottom: 1px solid var(--border);
+}
 
-    .logout_link:hover {
-      color: var(--crimson);
-    }
+.logo-text {
+  font-family: 'Playfair Display', Georgia, serif;
+    font-style: italic;
+    font-size: 2.0rem;
+    color: var(--dark);
+    letter-spacing: 0.01em;
+}
 
-    /* nav */
+.logout-link {
+  font-size: 1.5rem;
+  color: var(--dark);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.logout-link:hover {
+  color: var(--crimson);
+}
+
+    /* navigation bar links */
     nav {
       display: flex;
       justify-content: center;
-      gap: 120px;
+      gap: 100px;
       padding: 14px 0;
       border-bottom: 1px solid var(--border);
     }
@@ -90,93 +93,98 @@ $recommendations = $stmt->get_result();
       font-size: 1.05rem;
       color: var(--dark);
       text-decoration: none;
-      padding-bottom: 4px;
-      border-bottom: 2px solid transparent;
+      letter-spacing: 0.02em;
+      position: relative;
+      transition: color 0.2s;
     }
 
-    nav a:hover { color: #2d6a4f; }
-    nav a.active { border-bottom: 2px solid var(--dark); }
-
-    .content {
-      padding: 40px 50px;
+    nav a::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: var(--crimson);
+      transition: width 0.25s ease;
     }
+    nav a:hover { color: var(--crimson); }
+    nav a:hover::after { width: 100%; }
 
-    .section-title {
-      font-size: 1.4rem;
-      margin-bottom: 18px;
-    }
+.content {
+  padding: 40px 50px;
+}
 
-    .book-row {
-      display: flex;
-      gap: 24px;
-    }
+.section-title {
+  font-size: 1.4rem;
+  margin-bottom: 18px;
+}
 
-    .book-card {
-      width: 150px;
-      height: 200px;
-      background: var(--card);
-      border-radius: 4px;
-      transition: transform 0.2s, box-shadow 0.2s;
-      cursor: pointer;
-    }
+.book-row {
+  display: flex;
+  gap: 24px;
+}
 
-    .book-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.12);
-    }
-  </style>
+.book-card {
+  width: 150px;
+  height: 200px;
+  background: var(--card);
+  border-radius: 4px;
+  transition: transform 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+}
+
+.book-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+}
+</style>
 </head>
+
 <body>
 
-  <!-- header -->
-  <header class="top-bar">
+<header class="top-bar">
+  <div style="width:200px;"></div>
 
-    <!-- left spacer (keeps logo centered) -->
-    <div style="width:200px;"></div>
+  <span class="logo-text">The Lit Kit</span>
 
-    <!-- center logo -->
-    <span class="logo-text">The Lit Kit</span>
+  <div style="width:200px; text-align:right;">
+    <a href="logout.php" class="logout-link">Logout</a>
+  </div>
+</header>
 
-    <!-- right logout -->
-    <div style="width:200px; text-align:right;">
-      <a href="logout.php" class="logout_link">Logout</a>
-    </div>
+<nav>
+  <a href="mainPage.php">Home</a>
+  <a href="book_rec.php">My Books</a>
 
-  </header>
+  <?php if ($user_id): ?>
+    <a href="user_account.php?id=<?php echo $user_id; ?>">Account</a>
+  <?php else: ?>
+    <a href="signIn.php">Account</a>
+  <?php endif; ?>
+</nav>
 
-  <!-- nav -->
-  <nav>
-    <a href="mainPage.php">Home</a>
-    <a href="#" class="active">My Books</a>
-    <?php if ($user_id): ?>
-        <a href="user_account.php?id=<?php echo $user_id; ?>">Account</a>
-    <?php else: ?>
-        <a href="SignIn.php">Account</a>
-    <?php endif; ?>
-  </nav>
+<main class="content">
 
-  <!-- content -->
-  <main class="content">
-
-    <div class="section">
-      <p class="section-title">Popular in Your Favorite Genres</p>
-      <div class="book-row">
-        <?php while($row = $recommendations->fetch_assoc()): ?>
-        <a href="book_info.php?id=<?php echo $row['mmsID']; ?>">
-          <div class="book-card">
-            <div style="padding: 15px;">
-              <strong><?php echo htmlspecialchars($row['Title']); ?></strong><br>
-              <span style="font-size: 0.85rem; font-style: italic;">
-                by <?php echo htmlspecialchars($row['authorName']); ?>
-              </span>
-            </div>
-          </div>
-        </a>
-        <?php endwhile; ?>
+<div class="section">
+  <p class="section-title">Popular in Your Favorite Genres</p>
+  <div class="book-row">
+    <?php while($row = $recommendations->fetch_assoc()): ?>
+    <a href="book_info.php?id=<?php echo $row['mmsID']; ?>">
+      <div class="book-card">
+        <div style="padding: 15px;">
+          <strong><?php echo htmlspecialchars($row['Title']); ?></strong><br>
+          <span style="font-size: 0.85rem; font-style: italic;">
+            by <?php echo htmlspecialchars($row['authorName']); ?>
+          </span>
+        </div>
       </div>
-    </div>
+    </a>
+    <?php endwhile; ?>
+  </div>
+</div>
 
-  </main>
+</main>
 
 </body>
 </html>

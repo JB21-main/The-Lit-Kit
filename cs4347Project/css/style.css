@@ -3,6 +3,7 @@
   font-weight: 400;
   font-style: normal;
 }
+
 .lato-light {
   font-family: "Lato", sans-serif;
   font-weight: 300;
@@ -15,28 +16,31 @@
   font-style: normal;
 }
 
-/* TO-DO: finish converting elements to be responsive (rem)*/
-/*For most content to the side*/
-body {
-  background-color: white;
-  padding: 25px;
-  display: flex;
-  height: 100vh;
-}
-/*For centered content, like update acct*/
-.centered-body {
-  display: flex;
-  background-color: white;
-  align-items: center;
-  height: 100vh;
-  margin: 0 auto;
-  max-width: 300px;
-  flex-direction: column;
-}
-footer {
-  padding: 20px;
+/* Reset box sizing (important for alignment) */
+* {
+  box-sizing: border-box;
 }
 
+/* Body layout */
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;   /* center vertically */
+  min-height: 100vh;
+  padding: 25px;
+  background-color: white;
+}
+
+/* Wrapper for page content */
+.centered-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px; /* spacing between cards */
+}
+
+/* Typography */
 h1 {
   font-family: "Junge";
   font-size: 2.5rem;
@@ -50,20 +54,23 @@ h2 {
 
 h3 {
   font-family: "Lato";
-  font-weight: 390;
+  font-weight: 400;
 }
+
 p {
   font-family: "Lato";
   font-weight: 400;
 }
-/*styling for labels for textbox and dropdown*/
+
+/* Labels */
 label {
   font-family: "Lato";
-  font-weight: 390;
+  font-weight: 400;
   display: block;
   margin-bottom: 5px;
 }
-/*styling for text boxes*/
+
+/* Inputs */
 input {
   font-family: "Lato";
   font-weight: 300;
@@ -73,47 +80,43 @@ input {
   margin-bottom: 10px;
 
   border-radius: 5px;
-  border-style: solid;
-  border-width: 1px;
-  border-color: #aeaeae;
-  /*width: 100%;
-  max-width: 15.625rem;
-  box-sizing: border-box;*/
+  border: 1px solid #aeaeae;
 }
-/*styling for dropdowns*/
+
+/* Dropdowns */
 select {
   font-family: "Lato";
   font-weight: 300;
   width: 100%;
-  box-sizing: border-box; /*prevent adding extra width on top of 100%*/
+  max-width: 250px;
   height: 25px;
-  padding: 2px 2px 2px 10px; /*10 px for left margin*/
+  padding-left: 10px;
   margin-bottom: 10px;
-  max-width: 15.625rem;
 
   border-radius: 5px;
-  border-style: solid;
-  border-width: 1px;
-  border-color: #aeaeae;
+  border: 1px solid #aeaeae;
 }
-/*for general layouts with a div that has a border*/
+
+/* Card container */
 .div-border {
   width: 100%;
-  border-radius: 5px;
-  border-style: solid;
-  border-width: 1px;
-  border-color: #aeaeae;
-  padding: 20px 70px;
-  background-color: white;
+  max-width: 500px;
+  padding: 20px 40px;
   margin-bottom: 20px;
+
+  border-radius: 5px;
+  border: 1px solid #aeaeae;
+  background-color: white;
 }
+
+/* Button container */
 .div-button {
   display: flex;
   justify-content: center;
 }
 
+/* Buttons */
 button {
-  /*button styling*/
   font-family: "Lato";
   font-weight: 300;
   background-color: black;
@@ -121,25 +124,27 @@ button {
   border: none;
   border-radius: 5px;
 
-  /*layout*/
-  padding: 0.625rem clamp(0.75rem, 2vw, 1.0625rem);
-  margin: 0.1rem 0;
-  align-items: center;
+  padding: 0.625rem 1rem;
+  margin: 0.5rem 0;
+  cursor: pointer;
 }
 
+/* Delete button */
 .delete-button {
-  /*button styling*/
-  font-family: "Lato";
-  font-weight: 300;
   background-color: #c4000a;
-  color: white;
-  border: none;
-  border-radius: 5px;
+}
 
-  /*layout*/
-  padding: 0.625rem clamp(0.75rem, 2vw, 1.0625rem);
-  margin: 1rem 0;
-  align-items: center;
+.center-title {
+  text-align: center;
+}
 
+.logout-link {
+  font-size: 1.2rem;
+  color: var(--dark);
+  text-decoration: none;
+  transition: color 0.2s;
+}
 
+.logout-link:hover {
+  color: var(--crimson);
 }

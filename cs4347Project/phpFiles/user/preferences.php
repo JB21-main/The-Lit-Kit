@@ -84,7 +84,7 @@
     .logo-text {
       font-family: 'Playfair Display', Georgia, serif;
       font-style: italic;
-      font-size: 1.2rem;
+      font-size: 2.0rem;
       color: var(--dark);
       letter-spacing: 0.01em;
     }

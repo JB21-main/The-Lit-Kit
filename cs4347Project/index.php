@@ -2,11 +2,11 @@
     session_start();
 
     if (isset($_SESSION['user_id'])) {
-    header("Location: /cs4347Project/phpFiles/mainPage.php");
+    header("Location: phpFiles/user/mainPage.php");
     }   
     else {
-        header("Location: /cs4347Project/phpFiles/mainPage.php");
+        header("Location: phpFiles/user/mainPage.php");
     }
-    
+
     exit();
 ?>

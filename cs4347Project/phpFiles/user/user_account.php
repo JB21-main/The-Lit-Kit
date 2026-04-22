@@ -1,7 +1,14 @@
 <?php
 include 'db_connect.php';
 
-$current_user_id = isset($_GET['id']) ? $_GET['id'] : 123456;
+session_start();
+
+if (!isset($_SESSION['user_id'])) {
+    header("Location: signIn.php");
+    exit();
+}
+
+$current_user_id = $_SESSION['user_id'];
 
 // SQL
 $sql = "SELECT FName, LName, Email

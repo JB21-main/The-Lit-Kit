@@ -1,7 +1,8 @@
 <?php
+session_start();
 include 'db_connect.php';
 
-$current_user_id = isset($_GET['id']) ? $_GET['id'] : 123456;
+$current_user_id = $_SESSION['user_id'];
 
 // Handle update
 if (isset($_POST['update'])) {
@@ -23,6 +24,11 @@ if (isset($_POST['update'])) {
     // insert new prefer data
     $newGenres = [$_POST['genre1'], $_POST['genre2'], $_POST['genre3']];
 
+    if (count(array_unique($newGenres)) < 3) {
+    echo "<p style='color:red; text-align:center;'>Please select 3 different genres.</p>";
+    exit();
+}
+
     foreach($newGenres as $gName) {
         $getGid = $conn->prepare("SELECT genreID FROM genres WHERE genreName = ?");
         $getGid->bind_param("s", $gName);
@@ -36,7 +42,9 @@ if (isset($_POST['update'])) {
             $insert->execute();
         }
     }
-    echo "<p style='color: #2d6a4f; text-align: center;'>Account and Preferences updated!</p>";
+    $_SESSION['success'] = "Account and Preferences updated!";
+    header("Location: user_account.php");
+    exit();
 }
 
 // Fetch and display personal data
@@ -59,18 +67,21 @@ $genre1 = isset($preferGenres[0]) ? $preferGenres[0]['genreName'] : '';
 $genre2 = isset($preferGenres[1]) ? $preferGenres[1]['genreName'] : '';
 $genre3 = isset($preferGenres[2]) ? $preferGenres[2]['genreName'] : '';
 
-// Delete account
 if (isset($_POST['delete_acc'])) {
-    // Delete book_log
+    // Delete related data
     $conn->query("DELETE FROM book_log WHERE performedBy = $current_user_id");
-    // Delete is_recommended
     $conn->query("DELETE FROM is_recommended WHERE userID = $current_user_id");
-    // Delete prefers
     $conn->query("DELETE FROM prefers WHERE userID = $current_user_id");
+
     // Delete user
     $conn->query("DELETE FROM users WHERE userID = $current_user_id");
 
-    echo "<script>alert('Account information and all data will be deleted.'); window.location.href='index.php';</script>";
+    // Destroy session (user no longer exists)
+    session_destroy();
+
+    // Redirect to main page
+    header("Location: mainPage.php");
+    exit();
 }
 ?>
 
@@ -83,33 +94,70 @@ if (isset($_POST['delete_acc'])) {
 </head>
 <body class="centered-body">
 
-    <form action="update_account.php?id=<?php echo $current_user_id; ?>" method="POST">
+    <form action="update_account.php" method="POST">
         <div class="div-border">
             <h1>Account Details</h1>
 
-            <label for="name">Name:</label>
-            <input type="text" name="name" id="name" value="<?php echo htmlspecialchars($firstName . ' ' . $lastName); ?>">
+            <label for="name">Name:</label >
+            <input type="text" name="name" id="name" value="<?php echo htmlspecialchars($firstName . ' ' . $lastName); ?>" required>
             
-            <label for="email">Email:</label>
-            <input type="text" name="email" id="email" value="<?php echo htmlspecialchars($email); ?>">
+            <label for="email">Email:</label >
+            <input type="text" name="email" id="email" value="<?php echo htmlspecialchars($email); ?>" required>
 
             <h1>Preferences</h1>
             <h3>Your top 3 genres</h3>
             
             <?php 
-            // Helper to build dropdowns
-            $all_genres = [" ", "Journalism", "Film & Psychology", "Feminist Literature", "Media Theory", "Philosophy", "History"];
-            for ($i = 1; $i <= 3; $i++) {
-                $current_val = ${"genre" . $i}; // Dynamically gets $genre1, $genre2, $genre3
-                echo "<label>Choice $i</label>";
-                echo "<select name='genre$i'>";
-                foreach ($all_genres as $option) {
-                    $selected = ($option == $current_val) ? "selected" : "";
-                    echo "<option value='$option' $selected>$option</option>";
+                $all_genres = ["Journalism", "Film & Psychology", "Feminist Literature", "Media Theory", "Philosophy", "History"];
+
+                for ($i = 1; $i <= 3; $i++) {
+                    $current_val = ${"genre" . $i};
+
+                    echo "<label>Choice $i</label>";
+                    echo "<select id='genre$i' name='genre$i' required>";
+
+                    echo "<option value='' disabled " . ($current_val ? "" : "selected") . ">Select a genre</option>";
+
+                    foreach ($all_genres as $option) {
+                        $selected = ($option == $current_val) ? "selected" : "";
+                        echo "<option value='$option' $selected>$option</option>";
+                    }
+
+                    echo "</select>";
                 }
-                echo "</select>";
-            }
             ?>
+
+ <script>
+    const selects = [
+        document.getElementById('genre1'),
+        document.getElementById('genre2'),
+        document.getElementById('genre3')
+    ];
+
+    function updateDropdowns() {
+        const selectedValues = selects.map(s => s.value).filter(v => v !== "");
+
+        selects.forEach(select => {
+            Array.from(select.options).forEach(option => {
+                option.disabled = false;
+
+                if (
+                    option.value !== "" &&
+                    option.value !== select.value &&
+                    selectedValues.includes(option.value)
+                ) {
+                    option.disabled = true;
+                }
+            });
+        });
+    }
+
+    selects.forEach(select => {
+        select.addEventListener('change', updateDropdowns);
+    });
+
+    updateDropdowns();
+    </script>
 
             <div class="div-button">
                 <button type="submit" name="update">Update Account</button>
@@ -118,7 +166,7 @@ if (isset($_POST['delete_acc'])) {
     </form>
 
     <div class="div-border">
-        <h1>Delete Account</h1>
+        <h1 class="center-title">Delete Account</h1>
         <form method="POST" onsubmit="return confirm('Are you sure? This is permanent.');">
             <div class="div-button">
                 <button type="submit" name="delete_acc" class="delete-button">Delete Account</button>
