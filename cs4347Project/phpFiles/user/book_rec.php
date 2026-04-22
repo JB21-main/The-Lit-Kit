@@ -34,82 +34,8 @@ $recommendations = $stmt->get_result();
 <title>The Lit Kit — My Books</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=EB+Garamond:wght@400;500&display=swap" rel="stylesheet"/>
-
+<link rel="stylesheet" href="/CS4347DatabaseProject/cs4347Project/css/main.css">
 <style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-:root {
-  --dark: #1a1a1a;
-  --border: #e0e0e0;
-  --bg: #f5f3f0;
-  --card: #d9d9d9;
-  --crimson: #b91c1c;
-}
-
-body {
-  font-family: 'EB Garamond', Georgia, serif;
-  background: var(--bg);
-  color: var(--dark);
-}
-
-/* header */
-.top-bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 18px 60px;
-  border-bottom: 1px solid var(--border);
-}
-
-.logo-text {
-  font-family: 'Playfair Display', Georgia, serif;
-    font-style: italic;
-    font-size: 2.0rem;
-    color: var(--dark);
-    letter-spacing: 0.01em;
-}
-
-.logout-link {
-  font-size: 1.5rem;
-  color: var(--dark);
-  text-decoration: none;
-  transition: color 0.2s;
-}
-
-.logout-link:hover {
-  color: var(--crimson);
-}
-
-    /* navigation bar links */
-    nav {
-      display: flex;
-      justify-content: center;
-      gap: 100px;
-      padding: 14px 0;
-      border-bottom: 1px solid var(--border);
-    }
-
-    nav a {
-      font-size: 1.05rem;
-      color: var(--dark);
-      text-decoration: none;
-      letter-spacing: 0.02em;
-      position: relative;
-      transition: color 0.2s;
-    }
-
-    nav a::after {
-      content: '';
-      position: absolute;
-      bottom: -2px;
-      left: 0;
-      width: 0;
-      height: 1px;
-      background: var(--crimson);
-      transition: width 0.25s ease;
-    }
-    nav a:hover { color: var(--crimson); }
-    nav a:hover::after { width: 100%; }
 
 .content {
   padding: 40px 50px;
@@ -143,25 +69,29 @@ body {
 
 <body>
 
-<header class="top-bar">
-  <div style="width:200px;"></div>
+  <!-- logo and welcome at the top -->
+ <header class="top-bar">
+    <div style="width:200px">
+        <?php
+          echo "<span class='welcome'>" . $_SESSION['fname'] ." " . $_SESSION['lname'] . "</span>";
+        ?>
+    </div>
 
-  <span class="logo-text">The Lit Kit</span>
+    <span class="logo-text">The Lit Kit</span>
 
-  <div style="width:200px; text-align:right;">
-    <a href="logout.php" class="logout-link">Logout</a>
-  </div>
+    <div style="width:200px; text-align:right;">
+        <?php
+            if (isset($_SESSION['user_id'])) {
+                echo "<a href='logout.php' class='sign-in'>Logout</a>";
+            }
+        ?>
+    </div>
 </header>
 
 <nav>
   <a href="mainPage.php">Home</a>
   <a href="book_rec.php">My Books</a>
-
-  <?php if ($user_id): ?>
-    <a href="user_account.php?id=<?php echo $user_id; ?>">Account</a>
-  <?php else: ?>
-    <a href="signIn.php">Account</a>
-  <?php endif; ?>
+  <a href="user_account.php">Account</a>
 </nav>
 
 <main class="content">

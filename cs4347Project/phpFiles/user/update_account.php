@@ -2,11 +2,6 @@
 session_start();
 require_once 'db_connect.php';
 
-if (!isset($_SESSION['user_id'])) {
-    header("Location: signIn.php");
-    exit();
-}
-
 $current_user_id = $_SESSION['user_id'];
 
 // Handle update
@@ -20,6 +15,10 @@ if (isset($_POST['update'])) {
     $updateUser = $conn->prepare("UPDATE users SET FName = ?, LName = ?, Email = ? WHERE userID = ?");
     $updateUser->bind_param("sssi", $fName, $lName, $email, $current_user_id);
     $updateUser->execute();
+
+    $_SESSION['fname'] = $fName;
+    $_SESSION['lname'] = $lName;
+    $_SESSION['email'] = $email;
 
     // delete old prefer data
     $deletePrefer = $conn->prepare("DELETE FROM prefers WHERE userID = ?");
@@ -93,91 +92,136 @@ if (isset($_POST['delete_acc'])) {
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Update Account</title>
-    <link rel="stylesheet" href="../../css/style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Update Account | The Lit Kit</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=EB+Garamond&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/cs4347DATABASEPROJECT/cs4347Project/css/main.css">
+<link rel="stylesheet" href="/cs4347DATABASEPROJECT/cs4347Project/css/style.css">
 </head>
-<body class="centered-body">
 
-    <form action="update_account.php" method="POST">
-        <div class="div-border">
-            <h1>Account Details</h1>
+<body>
 
-            <label for="name">Name:</label >
-            <input type="text" name="name" id="name" value="<?php echo htmlspecialchars($firstName . ' ' . $lastName); ?>" required>
-            
-            <label for="email">Email:</label >
-            <input type="text" name="email" id="email" value="<?php echo htmlspecialchars($email); ?>" required>
+<!-- HEADER -->
+<header class="top-bar">
+    <div style="width:200px;"></div>
 
-            <h1>Preferences</h1>
-            <h3>Your top 3 genres</h3>
-            
-            <?php 
-                $all_genres = ["Journalism", "Film & Psychology", "Feminist Literature", "Media Theory", "Philosophy", "History"];
+    <span class="logo-text">The Lit Kit</span>
 
-                for ($i = 1; $i <= 3; $i++) {
-                    $current_val = ${"genre" . $i};
+    <div style="width:200px; text-align:right;">
+        <a href="logout.php" class="sign-in">Logout</a>
+    </div>
+</header>
 
-                    echo "<label>Choice $i</label>";
-                    echo "<select id='genre$i' name='genre$i' required>";
+<!-- NAV -->
+<nav>
+    <a href="mainPage.php">Home</a>
+    <a href="book_rec.php">My Books</a>
+    <a href="user_account.php">Account</a>
+</nav>
 
-                    echo "<option value='' disabled " . ($current_val ? "" : "selected") . ">Select a genre</option>";
+<!-- MAIN -->
+<main>
 
-                    foreach ($all_genres as $option) {
-                        $selected = ($option == $current_val) ? "selected" : "";
-                        echo "<option value='$option' $selected>$option</option>";
-                    }
+<form action="update_account.php" method="POST">
+<div class="div-border">
 
-                    echo "</select>";
-                }
-            ?>
+    <!-- ACCOUNT DETAILS -->
+    <h1>Update Account</h1>
 
- <script>
-    const selects = [
-        document.getElementById('genre1'),
-        document.getElementById('genre2'),
-        document.getElementById('genre3')
-    ];
+    <label for="name">Name</label>
+    <input type="text" name="name" id="name"
+           value="<?php echo htmlspecialchars($firstName . ' ' . $lastName); ?>" required>
 
-    function updateDropdowns() {
-        const selectedValues = selects.map(s => s.value).filter(v => v !== "");
+    <label for="email">Email</label>
+    <input type="text" name="email" id="email"
+           value="<?php echo htmlspecialchars($email); ?>" required>
 
-        selects.forEach(select => {
-            Array.from(select.options).forEach(option => {
-                option.disabled = false;
+    <!-- PREFERENCES -->
+    <h1>Update Preferences</h1>
+    <h3>Your top 3 genres</h3>
 
-                if (
-                    option.value !== "" &&
-                    option.value !== select.value &&
-                    selectedValues.includes(option.value)
-                ) {
-                    option.disabled = true;
-                }
-            });
-        });
-    }
+    <?php 
+        $all_genres = ["Journalism", "Film & Psychology", "Feminist Literature", "Media Theory", "Philosophy", "History"];
 
-    selects.forEach(select => {
-        select.addEventListener('change', updateDropdowns);
-    });
+        for ($i = 1; $i <= 3; $i++) {
+            $current_val = ${"genre" . $i};
 
-    updateDropdowns();
-    </script>
+            echo "<label>Choice $i</label>";
+            echo "<select id='genre$i' name='genre$i' required>";
 
-            <div class="div-button">
-                <button type="submit" name="update">Update Account</button>
-            </div>
+            echo "<option value='' disabled " . ($current_val ? "" : "selected") . ">Select a genre</option>";
+
+            foreach ($all_genres as $option) {
+                $selected = ($option == $current_val) ? "selected" : "";
+                echo "<option value='$option' $selected>$option</option>";
+            }
+
+            echo "</select>";
+        }
+    ?>
+
+    <!-- UPDATE BUTTON -->
+    <div class="div-button">
+        <button type="submit" name="update">Update Account</button>
+    </div>
+
+</div>
+</form>
+
+</main>
+
+<!-- DELETE BOX -->
+<div class="div-border delete-box">
+
+    <h1>Delete Account</h1>
+
+    <p class="delete-text">
+        This action is permanent and cannot be undone.
+    </p>
+
+    <form method="POST" onsubmit="return confirm('Are you sure? This is permanent.');">
+        <div class="div-button">
+            <button type="submit" name="delete_acc" class="delete-button">
+                Delete Account
+            </button>
         </div>
     </form>
 
-    <div class="div-border">
-        <h1 class="center-title">Delete Account</h1>
-        <form method="POST" onsubmit="return confirm('Are you sure? This is permanent.');">
-            <div class="div-button">
-                <button type="submit" name="delete_acc" class="delete-button">Delete Account</button>
-            </div>
-        </form>
-    </div>
+</div>
+
+<script>
+const selects = [
+    document.getElementById('genre1'),
+    document.getElementById('genre2'),
+    document.getElementById('genre3')
+];
+
+function updateDropdowns() {
+    const selectedValues = selects.map(s => s.value).filter(v => v !== "");
+
+    selects.forEach(select => {
+        Array.from(select.options).forEach(option => {
+            option.disabled = false;
+
+            if (
+                option.value !== "" &&
+                option.value !== select.value &&
+                selectedValues.includes(option.value)
+            ) {
+                option.disabled = true;
+            }
+        });
+    });
+}
+
+selects.forEach(select => {
+    select.addEventListener('change', updateDropdowns);
+});
+
+updateDropdowns();
+</script>
 
 </body>
 </html>

@@ -1,6 +1,6 @@
 <?php
 require_once '../user/db_connect.php';
-require_once 'admin_check.php';
+//require_once 'admin_check.php';
 
 # Deletion
 if (isset($_GET['delete_id'])) {

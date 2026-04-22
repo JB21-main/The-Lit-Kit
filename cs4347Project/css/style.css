@@ -21,17 +21,6 @@
   box-sizing: border-box;
 }
 
-/* Body layout */
-body {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;   /* center vertically */
-  min-height: 100vh;
-  padding: 25px;
-  background-color: white;
-}
-
 /* Wrapper for page content */
 .centered-body {
   display: flex;
@@ -77,7 +66,7 @@ input {
   width: 250px;
   height: 25px;
   padding: 2px 2px 2px 10px;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 
   border-radius: 5px;
   border: 1px solid #aeaeae;
@@ -100,13 +89,22 @@ select {
 /* Card container */
 .div-border {
   width: 100%;
-  max-width: 500px;
-  padding: 20px 40px;
-  margin-bottom: 20px;
-
-  border-radius: 5px;
+  max-width: 650px;
+  padding: 40px 50px;
+  margin: 60px auto;
+  min-height: auto;
+  border-radius: 8px;
   border: 1px solid #aeaeae;
-  background-color: white;
+  background-color: #f5f3f0;
+}
+
+.div-border h1 {
+  margin-bottom: 20px;
+}
+
+.div-border h3 {
+  margin-top: 15px;
+  margin-bottom: 4px;
 }
 
 /* Button container */
@@ -147,4 +145,58 @@ button {
 
 .logout-link:hover {
   color: var(--crimson);
+}
+
+/* navigation bar links */
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 100px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    nav a {
+      font-family: 'EB Garamond', Georgia, serif;
+      font-size: 1.05rem;
+      color: var(--dark);
+      text-decoration: none;
+      letter-spacing: 0.02em;
+      position: relative;
+      transition: color 0.2s;
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: var(--crimson);
+      transition: width 0.25s ease;
+    }
+    nav a:hover { color: var(--crimson); }
+    nav a:hover::after { width: 100%; }
+
+    .div-border:last-of-type {
+      max-width: 400px;   /* smaller delete box */
+      text-align: center;
+    }
+
+    .delete-box {
+    max-width: 350px;  
+    margin: 20px auto;
+    padding: 20px 25px;
+    text-align: center;
+}
+
+    .delete-box h1 {
+      margin-bottom: 10px;
+    font-size: 1.5rem;
+    }
+
+.delete-text {
+  margin-bottom: 12px;
+  font-size: 0.9rem;
 }

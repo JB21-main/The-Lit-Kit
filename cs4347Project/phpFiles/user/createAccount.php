@@ -48,6 +48,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>The Lit Kit — Create Account</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=EB+Garamond:wght@400;500&display=swap" rel="stylesheet"/>
+  
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
