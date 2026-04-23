@@ -5,9 +5,9 @@ require_once 'admin_check.php';
 
 // Get data from session
 $admin_id = $_SESSION['user_id'] ?? 'N/A';
-$admin_fname = $_SESSION['fnaame'] ?? 'Admin';
-$admin_lname = $_SESSION['lname'] ?? '';
-$admin_email = $_SESSION['email'] ?? 'Not set';
+$admin_fname = $_SESSION['FName'] ?? 'Admin';
+$admin_lname = $_SESSION['LName'] ?? '';
+$admin_email = $_SESSION['Email'] ?? 'Not set';
 $admin_role = $_SESSION['Role'] ?? 'Administrator';
 ?>
 
@@ -30,11 +30,15 @@ $admin_role = $_SESSION['Role'] ?? 'Administrator';
         <!--div with heading and edit button TODO: move button to right-->
         <div class="horiz-spaced-div">
             <h1 >Account Details</h1>
-           <div><button class="justify-right">Edit Account</button></div>
+           <div>
+                <a href="update_admin.php" style="text-decoration: none;">
+                    <button class="justify-right">Edit Account</button>
+                </a>
+            </div>
         </div>
     
     <h3>Name</h3>
-    <input type="acct-text" value="<?php echo htmlspecialchars($admin_fname . ' ' . $admin_lname); ?>" readonly>  <!-- change to actual value, same for below-->
+    <input type="acct-text" value="<?php echo htmlspecialchars($admin_fname . ' ' . $admin_lname); ?>" readonly>  
     <h3>Email</h3>
     <input type="acct-text" value="<?php echo htmlspecialchars($admin_email); ?>" readonly> 
 

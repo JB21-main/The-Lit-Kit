@@ -10,4 +10,3 @@ if (!isset($_SESSION['Role']) || $_SESSION['Role'] !== 'admin') {
     exit();
 }
 ?>
-?>
