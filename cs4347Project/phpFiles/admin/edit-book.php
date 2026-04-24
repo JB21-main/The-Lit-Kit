@@ -140,11 +140,7 @@ while($row = $result->fetch_assoc()){
 <input type="text" name="callNumber"
        value="<?= htmlspecialchars($book['callNumber']) ?>">
 
-
-<label for="mms-id">mms ID</label> 
-<input type="text" id="mms-id"
-        value="<?= htmlspecialchars($book['mmsID']) ?>">
-
+<input type="hidden" name="mmsID" value="<?= $book['mmsID'] ?>">
 
 <div class="div-button">
   <button type="submit">Update Book</button>
