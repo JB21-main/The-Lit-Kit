@@ -7,7 +7,7 @@ $current_user_id = $_SESSION['user_id'];
 // Handle update
 if (isset($_POST['update'])) {
     $name = $_POST['name'];
-    $parts = explode(' ', trim($name));
+    $parts = explode(' ', trim($name), 2);
     $fName = $parts[0];
     $lName = isset($parts[1]) ? $parts[1] : '';
     $email = $_POST['email'];
@@ -73,10 +73,20 @@ $genre3 = isset($preferGenres[2]) ? $preferGenres[2]['genreName'] : '';
 
 if (isset($_POST['delete_acc'])) {
     // Delete related data
-    $conn->query("DELETE FROM book_log WHERE performedBy = $current_user_id");
-    $conn->query("DELETE FROM is_recommended WHERE userID = $current_user_id");
-    $conn->query("DELETE FROM prefers WHERE userID = $current_user_id");
 
+    // fix: no longer draw current user id from session, in case of manipulated session
+    $stmt = $conn->prepare("DELETE FROM book_log WHERE performedBy = ?");
+    $stmt->bind_param("i", $current_user_id);
+    $stmt->execute();
+
+    $stmt = $conn->prepare("DELETE FROM is_recommended WHERE userID = ?");
+    $stmt->bind_param("i", $current_user_id);
+    $stmt->execute();
+
+    $stmt = $conn->prepare("DELETE FROM users WHERE userID = ?");
+    $stmt->bind_param("i", $current_user_id);
+    $stmt->execute();
+    
     // Delete user
     $conn->query("DELETE FROM users WHERE userID = $current_user_id");
 
