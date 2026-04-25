@@ -21,9 +21,15 @@ $is_admin = isset($_SESSION['is_admin']) && $_SESSION['is_admin'] === true;
         </div>
         <nav> <!--bottom bar: navigation bar-->
             <?php if ($is_admin):  
-            <a class="nav-a" href="#">Home</a>
-            <a class="nav-a" href="#">My Books</a>
-            <a class="nav-a" href="#">Account</a>
+                <a class="nav-a" href="#">Dashboard</a>
+                <a class="nav-a" href="#">Manage Books</a>
+                <a class="nav-a" href="#">Account</a>
+            <?php else: ?>
+                <a class="nav-a" href="#">Home</a>
+                <a class="nav-a" href="#">My Books</a>
+                <a class="nav-a" href="#">Account</a>
+            <?php endif; ?>
+            
         </nav>
 
     </header>
