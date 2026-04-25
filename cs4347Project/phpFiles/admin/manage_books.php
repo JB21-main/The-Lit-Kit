@@ -28,8 +28,8 @@ $books = $conn->query("SELECT b.mmsID, b.Title, a.authorName,
                         GROUP_CONCAT(g.genreName SEPARATOR ', ') as genreList
                         FROM books b 
                         JOIN author a ON b.authorID = a.authorID
-                        JOIN book_genre bg ON b.mmsID = bg.mmsID
-                        JOIN genres g ON g.genreID = bg.genreID
+                        LEFT JOIN book_genre bg ON b.mmsID = bg.mmsID
+                        LEFT JOIN genres g ON g.genreID = bg.genreID
                         GROUP BY b.mmsID, b.Title, a.authorName");
 ?>
 
@@ -89,7 +89,10 @@ $books = $conn->query("SELECT b.mmsID, b.Title, a.authorName,
             <th>Title</th>
             <th>Author</th>
             <th>Genre</th>
-            <th>Actions</th>
+            <th>Add Copy</th>
+            <th>Edit</th>
+            <th>Delete</th>
+            <th>View</th>
           </tr>
         </thead>
 
@@ -101,15 +104,25 @@ $books = $conn->query("SELECT b.mmsID, b.Title, a.authorName,
             <td><?= htmlspecialchars($row['authorName']); ?></td>
             <td><?= htmlspecialchars($row['genreList']); ?></td>
             <td>
-              <a href="edit-book.php?id=<?= $row['mmsID']; ?>">Edit</a> |
+              <a href="add-copy.php?id=<?= $row['mmsID']; ?>"><i class="fa-solid fa-plus"></i></a>
+            </td>
+            <td>
+              <a href="edit-book.php?id=<?= $row['mmsID']; ?>"><i class="fa-solid fa-pen"></i></a>
+            </td>
+            <td>
                 <a href="?delete_id=<?= $row['mmsID']; ?>" onclick="return confirm('Are you sure?')">
-                <button class="delete-button" type="button">Delete</button>
+                <button class="delete-button" type="button"><i class="fa-solid fa-trash"></i></button>
                 </a>
+            </td>
+            <td>
+              <a><i class="fa-solid fa-chevron-down"></i></a>
             </td>
           </tr>
           <?php endwhile; ?>
+          
         </tbody>
       </table>
+      <a href="add-book.php"><button type="button">Add Book</button></a>
 
     </div>
   </div>

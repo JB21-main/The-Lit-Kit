@@ -107,16 +107,7 @@
       justify-content: center;
     }
 
-    .img-placeholder {
-      font-family: 'EB Garamond', Georgia, serif;
-      font-size: 1rem;
-      color: #aaa;
-      letter-spacing: 0.08em;
-      border: 1.5px dashed #ccc;
-      padding: 14px 24px;
-      border-radius: 4px;
-      user-select: none;
-    }
+  
 
     .split-right {
       flex: 1;
@@ -222,7 +213,7 @@
 
     <!-- left side for the image -->
     <div class="split-left">
-      <span class="img-placeholder">[ IMAGE ]</span>
+      <span class="img-placeholder"><img src="../../images/reading-news-1600.jpg" style="width:100%;"></span>
     </div>
 
     <!-- right side has the form fields -->

@@ -32,9 +32,10 @@
 
       if ($_SESSION['Role'] === 'admin') {
               // Go UP one level, then into admin *currently make manage_book as a placeholder*
-              header("Location: /CS4347DatabaseProject/cs4347Project/phpFiles/admin/adminMainPage.php");
+              header("Location: ../admin/adminMainPage.php");
           } else {
-              header("Location: mainPage.php");
+              header(__DIR__.'/mainPage.php');
+              //header("Location: /mainPage.php");
           }
 
           exit();
@@ -223,7 +224,7 @@
   <div class="split">
 
     <!-- left side for the image -->
-    <div class="split-left">[ IMAGE ]</div>
+    <div class="split-left"><img src="../../images/art-literature-1600.jpg" style="width:100%;"></div>
 
     <!-- right side has sign in form -->
     <div class="split-right">
