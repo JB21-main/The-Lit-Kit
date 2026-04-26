@@ -53,7 +53,7 @@ $admin_role = $_SESSION['Role'] ?? 'Administrator';
 
         <h3>Name</h3>
         <input type="text"
-            value="<?= htmlspecialchars(($_SESSION['fname']) . ' ' . ($_SESSION['lname'] )) ?>"
+            value="<?= htmlspecialchars(($_SESSION['FName']) . ' ' . ($_SESSION['LName'] )) ?>"
             readonly>
 
         <h3>Email</h3>
