@@ -18,8 +18,8 @@ $admin_role = $_SESSION['Role'] ?? 'Administrator';
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>The Lit Kit</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=EB+Garamond:wght@400;500&display=swap" rel="stylesheet"/>
-    <link rel="stylesheet" href="/CS4347DatabaseProject/cs4347Project/css/style.css">
-    <link rel="stylesheet" href="/CS4347DatabaseProject/cs4347Project/css/main.css">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/main.css">
 </head>
 
 <body>
@@ -31,7 +31,7 @@ $admin_role = $_SESSION['Role'] ?? 'Administrator';
     <span class="logo-text">The Lit Kit</span>
 
     <div style="width:200px; text-align:right;">
-        <a href="/CS4347DATABASEPROJECT/cs4347Project/phpFiles/user/logout.php" class="sign-in">Logout</a>
+        <a href="../user/logout.php" class="sign-in">Logout</a>
     </div>
 </header>
 

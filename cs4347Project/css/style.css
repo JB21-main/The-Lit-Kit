@@ -85,7 +85,9 @@ select {
   border: 1px solid #aeaeae;
   appearance: none;
   -webkit-appearance: none;
-  background: white url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%231a1a1a'/%3E%3C/svg%3E") no-repeat right 10px center;
+  background: white
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%231a1a1a'/%3E%3C/svg%3E")
+    no-repeat right 10px center;
   background-size: 10px;
   cursor: pointer;
 }
@@ -155,54 +157,22 @@ button {
   color: var(--crimson);
 }
 
-/* navigation bar links */
-    nav {
-      display: flex;
-      justify-content: center;
-      gap: 100px;
-      padding: 14px 0;
-      border-bottom: 1px solid var(--border);
-    }
-
-    nav a {
-      font-family: 'EB Garamond', Georgia, serif;
-      font-size: 1.05rem;
-      color: var(--dark);
-      text-decoration: none;
-      letter-spacing: 0.02em;
-      position: relative;
-      transition: color 0.2s;
-    }
-
-    nav a::after {
-      content: '';
-      position: absolute;
-      bottom: -2px;
-      left: 0;
-      width: 0;
-      height: 1px;
-      background: var(--crimson);
-      transition: width 0.25s ease;
-    }
-    nav a:hover { color: var(--crimson); }
-    nav a:hover::after { width: 100%; }
-
-    .div-border:last-of-type {
-      max-width: 400px;   /* smaller delete box */
-      text-align: center;
-    }
-
-    .delete-box {
-    max-width: 350px;  
-    margin: 20px auto;
-    padding: 20px 25px;
-    text-align: center;
+.div-border:last-of-type {
+  max-width: 400px; /* smaller delete box */
+  text-align: center;
 }
 
-    .delete-box h1 {
-      margin-bottom: 10px;
-    font-size: 1.5rem;
-    }
+.delete-box {
+  max-width: 350px;
+  margin: 20px auto;
+  padding: 20px 25px;
+  text-align: center;
+}
+
+.delete-box h1 {
+  margin-bottom: 10px;
+  font-size: 1.5rem;
+}
 
 .delete-text {
   margin-bottom: 12px;
@@ -221,15 +191,15 @@ button {
 
 .search-row input {
   flex: 1;
-  width: auto;        /* overrides 250px */
-  margin-bottom: 0;   /* remove spacing */
+  width: auto; /* overrides 250px */
+  margin-bottom: 0; /* remove spacing */
 }
 
 /* Dropdown for genres in edit book page*/
 .dropdown {
   position: relative;
   width: 250px;
-  margin: 0 auto 20px auto;  /* centers it + bottom spacing */
+  margin: 0 auto 20px auto; /* centers it + bottom spacing */
 }
 
 .dropbtn {
@@ -251,7 +221,7 @@ button {
 }
 
 .dropbtn::after {
-  content: '';
+  content: "";
   width: 0;
   height: 0;
   border-left: 5px solid transparent;
@@ -285,7 +255,7 @@ button {
 }
 
 .dropdown-content label:hover {
-  background-color: #f5f3f0;
+  background-color: white;
 }
 
 /* Must come after global input rule to override it */
@@ -298,4 +268,106 @@ button {
 
 .dropdown-content.show {
   display: block;
+}
+
+/*top bars*/
+header {
+  box-sizing: border-box;
+  width: 100vw;
+
+  display: flex;
+  flex-direction: column;
+  padding: 0px;
+  margin: 0px;
+}
+.top-bar {
+  width: calc(100% - 8px);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  padding: 16px 80px;
+  border-bottom: 1px solid #ccc;
+
+  flex-shrink: 0;
+  background-color: white;
+  /*background-color: #f5f3f0; */
+}
+.top-bar-placeholder {
+  flex: 1;
+}
+
+.logo-text {
+  font-family: "Playfair Display", Georgia, serif;
+  font-style: italic;
+  font-size: 2rem;
+  font-weight: 500;
+  color: var(--dark);
+  letter-spacing: 0.01em;
+  text-decoration: none;
+}
+
+.profile-button {
+  color: black;
+  font-size: 1rem;
+  font-weight: 400;
+
+  background-color: #f5f3f0;
+}
+
+nav {
+  width: calc(100% - 8px);
+  padding: 15px 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  column-gap: 70px;
+  border-bottom: 1px solid #ccc;
+  background-color: white;
+}
+
+.nav-a {
+  font-family: "Junge";
+  font-weight: 400;
+  color: black;
+  text-decoration: none;
+}
+/*profile dropdown*/
+
+.profile-container {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  position: relative;
+  background-color: white;
+}
+.profile-dropdown {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 100%;
+  background-color: #f5f3f1;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  min-width: 120px;
+  z-index: 100;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.profile-dropdown.open {
+  display: block;
+}
+
+.profile-dropdown a {
+  display: block;
+  padding: 10px 16px;
+  color: black;
+  text-decoration: none;
+  font-family: "Junge";
+}
+
+.profile-dropdown a:hover {
+  /*background-color: #f5f5f5;*/
+  background-color: #f5f5f5;
 }

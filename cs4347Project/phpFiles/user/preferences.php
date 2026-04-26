@@ -289,7 +289,7 @@
     </div>
 
     <!-- image goes here on the right -->
-    <div class="split-right">[ IMAGE ]</div>
+    <div class="split-right"><img src="../../images/librairie-romantique-1600.jpg" style="width:100%;"></div>
 
   </div>
   <script>

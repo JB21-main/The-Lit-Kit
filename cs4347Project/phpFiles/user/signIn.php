@@ -32,9 +32,11 @@
 
       if ($_SESSION['Role'] === 'admin') {
               // Go UP one level, then into admin *currently make manage_book as a placeholder*
-              header("Location: /CS4347DatabaseProject/cs4347Project/phpFiles/admin/adminMainPage.php");
+              header("Location: ../admin/adminMainPage.php");
           } else {
-              header("Location: mainPage.php");
+              header("Location: ../user/mainPage.php");
+              //header(__DIR__.'/mainPage.php');
+              //header("Location: /mainPage.php");
           }
 
           exit();
@@ -110,7 +112,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: #f0ece6;
+      background: white;
       color: #aaa;
       font-family: 'EB Garamond', Georgia, serif;
       font-size: 1.3rem;
@@ -187,7 +189,7 @@
 
     .forgot {
       display: block;
-      text-align: right;
+      text-align: center; /* previously right*/
       margin-top: 8px;
       font-size: 1rem;
       color: #888;
@@ -222,8 +224,11 @@
   <!-- left and right sections -->
   <div class="split">
 
-    <!-- left side for the image -->
-    <div class="split-left">[ IMAGE ]</div>
+    <!-- left side for the image <img src="../../images/art-literature-1600.jpg" style="width:80%; margin-left:100px;">-->
+    <div class="split-left">
+      <img src="../../images/reading-news-1600.jpg" style="width:96%;">
+    </div>
+    
 
     <!-- right side has sign in form -->
     <div class="split-right">

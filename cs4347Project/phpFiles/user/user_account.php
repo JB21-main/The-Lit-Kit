@@ -46,8 +46,8 @@ $g3 = $user_genres[2] ?? "None Selected";
 <title>Account | The Lit Kit</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=EB+Garamond&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/cs4347DATABASEPROJECT/cs4347Project/css/main.css">
-<link rel="stylesheet" href="/cs4347DATABASEPROJECT/cs4347Project/css/style.css">
+<link rel="stylesheet" href="../../css/main.css">
+<link rel="stylesheet" href="../../css/style.css">
 </head>
 
 <body>
@@ -64,11 +64,15 @@ $g3 = $user_genres[2] ?? "None Selected";
 </header>
 
 <!-- NAV -->
+ <!--
+< ?php include '../common/nav.php'; ?> -->
 <nav>
     <a href="mainPage.php">Home</a>
     <a href="book_rec.php">My Books</a>
     <a href="user_account.php">Account</a>
 </nav>
+
+
 
 <!-- MAIN CONTENT -->
 <main>

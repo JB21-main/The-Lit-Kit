@@ -8,11 +8,11 @@ if (isset($_GET['delete_id'])) {
     $conn->begin_transaction();
     try {
         $stmt1 = $conn->prepare("DELETE FROM book_genre WHERE mmsID = ?");
-        $stmt1->bind_param("i", $delete_id);
+        $stmt1->bind_param("s", $delete_id);
         $stmt1->execute();
 
         $stmt2 = $conn->prepare("DELETE FROM books WHERE mmsID = ?");
-        $stmt2->bind_param("i", $delete_id);
+        $stmt2->bind_param("s", $delete_id);
         $stmt2->execute();
         
         $conn->commit();
@@ -28,8 +28,8 @@ $books = $conn->query("SELECT b.mmsID, b.Title, a.authorName,
                         GROUP_CONCAT(g.genreName SEPARATOR ', ') as genreList
                         FROM books b 
                         JOIN author a ON b.authorID = a.authorID
-                        JOIN book_genre bg ON b.mmsID = bg.mmsID
-                        JOIN genres g ON g.genreID = bg.genreID
+                        LEFT JOIN book_genre bg ON b.mmsID = bg.mmsID
+                        LEFT JOIN genres g ON g.genreID = bg.genreID
                         GROUP BY b.mmsID, b.Title, a.authorName");
 ?>
 
@@ -89,7 +89,10 @@ $books = $conn->query("SELECT b.mmsID, b.Title, a.authorName,
             <th>Title</th>
             <th>Author</th>
             <th>Genre</th>
-            <th>Actions</th>
+            <th>Add Copy</th>
+            <th>Edit</th>
+            <th>Delete</th>
+            <th>Copies</th>
           </tr>
         </thead>
 
@@ -101,18 +104,69 @@ $books = $conn->query("SELECT b.mmsID, b.Title, a.authorName,
             <td><?= htmlspecialchars($row['authorName']); ?></td>
             <td><?= htmlspecialchars($row['genreList']); ?></td>
             <td>
-              <a href="edit-book.php?id=<?= $row['mmsID']; ?>">Edit</a> |
+              <a href="add-copy.php?id=<?= $row['mmsID']; ?>"><i class="fa-solid fa-plus"></i></a>
+            </td>
+            <td>
+              <a href="edit-book.php?id=<?= $row['mmsID']; ?>"><i class="fa-solid fa-pen"></i></a>
+            </td>
+            <td>
                 <a href="?delete_id=<?= $row['mmsID']; ?>" onclick="return confirm('Are you sure?')">
-                <button class="delete-button" type="button">Delete</button>
+                <button class="delete-button" type="button"><i class="fa-solid fa-trash"></i></button>
                 </a>
+            </td>
+            <td>
+              <a onclick="toggleCopies('copies-<?= $row['mmsID'] ?>')" style="cursor:pointer;">
+                <i class="fa-solid fa-chevron-down"></i>
+              </a>
+            </td>
+          </tr>
+          <!-- copies for each row of books- hidden until toggleCopies -->
+          <tr id="copies-<?= $row['mmsID'] ?>" style="display:none;">
+            <td colspan="8">
+              <table class="book-table">
+                <thead>
+                  <tr>
+                    <th>Barcode</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <?php
+                    $mmsID = $row['mmsID'];
+                    $copyStmt = $conn->prepare("SELECT Barcode, status FROM books_copy WHERE mmsID = ?");
+                    $copyStmt->bind_param("s", $mmsID);
+                    $copyStmt->execute();
+                    $copies = $copyStmt->get_result();
+
+                    if ($copies->num_rows === 0):
+                  ?>
+                    <tr><td colspan="2">No copies available.</td></tr>
+                  <?php else: ?>
+                    <?php while($copy = $copies->fetch_assoc()): ?>
+                      <tr>
+                        <td><?= htmlspecialchars($copy['Barcode']) ?></td>
+                        <td><?= htmlspecialchars($copy['status']) ?></td>
+                      </tr>
+                    <?php endwhile; ?>
+                  <?php endif; ?>
+                </tbody>
+              </table>
             </td>
           </tr>
           <?php endwhile; ?>
+          
         </tbody>
       </table>
+      <a href="add-book.php"><button type="button">Add Book</button></a>
 
     </div>
   </div>
+  <script>
+function toggleCopies(id) {
+    const row = document.getElementById(id);
+    row.style.display = row.style.display === 'none' ? 'table-row' : 'none';
+}
+</script>
 
 </body>
 </html>
