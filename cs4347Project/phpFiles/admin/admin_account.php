@@ -3,12 +3,14 @@ session_start();
 require_once '../user/db_connect.php';
 require_once 'admin_check.php';
 
-// Get data from session
-$admin_id = $_SESSION['user_id'] ?? 'N/A';
-$admin_fname = $_SESSION['FName'] ?? 'Admin';
-$admin_lname = $_SESSION['LName'] ?? '';
-$admin_email = $_SESSION['Email'] ?? 'Not set';
-$admin_role = $_SESSION['Role'] ?? 'Administrator';
+$admin_id = $_SESSION['user_id'];
+
+// Admin data
+$query = "SELECT FName, LName, Email, Role FROM users WHERE userID = ?";
+$stmt = $conn->prepare($query);
+$stmt->bind_param("i", $admin_id);
+$stmt->execute();
+$admin_data = $stmt->get_result()->fetch_assoc();
 ?>
 
 <!DOCTYPE html>
@@ -18,8 +20,9 @@ $admin_role = $_SESSION['Role'] ?? 'Administrator';
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>The Lit Kit</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=EB+Garamond:wght@400;500&display=swap" rel="stylesheet"/>
-    <link rel="stylesheet" href="../../css/style.css">
-    <link rel="stylesheet" href="../../css/main.css">
+    <link rel="stylesheet" href="/CS4347DatabaseProject/cs4347Project/css/style.css">
+    <link rel="stylesheet" href="/CS4347DatabaseProject/cs4347Project/css/main.css">
+
 </head>
 
 <body>
@@ -53,7 +56,7 @@ $admin_role = $_SESSION['Role'] ?? 'Administrator';
 
         <h3>Name</h3>
         <input type="text"
-            value="<?= htmlspecialchars(($_SESSION['FName']) . ' ' . ($_SESSION['LName'] )) ?>"
+            value="<?= htmlspecialchars($admin_data['FName'] . ' ' . $admin_data['LName']) ?>"
             readonly>
 
         <h3>Email</h3>
