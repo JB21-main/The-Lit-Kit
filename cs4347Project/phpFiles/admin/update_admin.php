@@ -16,8 +16,8 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->bind_param("sssi", $new_fname, $new_lname, $new_email, $admin_id);
 
     if($stmt->execute()) {
-        $_SESSION['fName'] = $new_fname;
-        $_SESSION['lName'] = $new_lname;
+        $_SESSION['FName'] = $new_fname;
+        $_SESSION['LName'] = $new_lname;
         $_SESSION['email'] = $new_email;
 
         header("Location: admin_account.php?msg=success");
@@ -89,14 +89,6 @@ $admin_data = $stmt->get_result()->fetch_assoc();
                 <button type = "submit">Update Account</button>
             </div>
     </form>
-    <!--div for deleting account- would be good to later on add an are you sure message-->
-    <div class="div-border">
-        <h1>Delete Account</h1>
-        <div class="div-button">
-            <button class="delete-button">Delete Account</button>
-        </div>
-    </div>
-   
     
 </body>
 <footer></footer>
