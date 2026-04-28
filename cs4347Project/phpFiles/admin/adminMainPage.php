@@ -10,7 +10,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>The Lit Kit</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=EB+Garamond:wght@400;500&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="../../css/main.css">
+  <link rel="stylesheet" href="/CS4347DATABASEPROJECT/cs4347Project/css/main.css">
 </head>
 <body>
 

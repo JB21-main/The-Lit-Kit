@@ -22,7 +22,7 @@ $admin_data = $stmt->get_result()->fetch_assoc();
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=EB+Garamond:wght@400;500&display=swap" rel="stylesheet"/>
     
     <!--links for fonts and style sheet-->
-    <link rel="stylesheet" href="/CS4347DatabaseProject/cs4347Project/css/style.css">
+    <link rel="stylesheet" href="/CS4347DATABASEPROJECT/cs4347Project/css/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Junge&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
