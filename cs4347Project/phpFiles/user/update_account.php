@@ -111,14 +111,18 @@ if (isset($_POST['delete_acc'])) {
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Update Account | The Lit Kit</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=EB+Garamond&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/cs4347DATABASEPROJECT/cs4347Project/css/main.css">
-<link rel="stylesheet" href="/cs4347DATABASEPROJECT/cs4347Project/css/style.css">
+ <!--links for fonts and style sheet-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Junge&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=EB+Garamond:wght@400;500&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="../../css/style.css">
+    <!---->
 </head>
 
 <body>
-
-<!-- HEADER -->
+<?php include '../common/nav.php'; ?> 
+<!-- HEADER 
 <header class="top-bar">
     <div style="width:200px;"></div>
 
@@ -129,22 +133,23 @@ if (isset($_POST['delete_acc'])) {
     </div>
 </header>
 
-<!-- NAV -->
+
 <nav>
     <a href="mainPage.php">Home</a>
     <a href="book_rec.php">My Books</a>
     <a href="user_account.php">Account</a>
 </nav>
-
+-->
 <!-- MAIN -->
-<main>
-
+<main class="acct-main">
+<div class="card-background-acct">
 <form action="update_account.php" method="POST">
-<div class="div-border">
+
+    <div class="div-border-long">
 
     <!-- ACCOUNT DETAILS -->
     <h1>Update Account</h1>
-
+    <div class="form-text">
     <label for="name">Name</label>
     <input type="text" name="name" id="name"
            value="<?php echo htmlspecialchars($firstName . ' ' . $lastName); ?>" required>
@@ -152,11 +157,11 @@ if (isset($_POST['delete_acc'])) {
     <label for="email">Email</label>
     <input type="text" name="email" id="email"
            value="<?php echo htmlspecialchars($email); ?>" required>
-
+</div>
     <!-- PREFERENCES -->
     <h1>Update Preferences</h1>
     <h3>Your top 3 genres</h3>
-
+<div class="form-text">
     <?php 
         $all_genres = ["Journalism", "Film & Psychology", "Feminist Literature", "Media Theory", "Philosophy", "History"];
 
@@ -176,19 +181,21 @@ if (isset($_POST['delete_acc'])) {
             echo "</select>";
         }
     ?>
+    </div>
 
     <!-- UPDATE BUTTON -->
     <div class="div-button">
         <button type="submit" name="update">Update Account</button>
     </div>
-
 </div>
+</div>
+
 </form>
-
+</div>
 </main>
-
+<div class="card-background-acct">
 <!-- DELETE BOX -->
-<div class="div-border delete-box">
+<div class="div-border-delete delete-box">
 
     <h1>Delete Account</h1>
 
@@ -203,7 +210,7 @@ if (isset($_POST['delete_acc'])) {
             </button>
         </div>
     </form>
-
+</div>
 </div>
 
 <script>

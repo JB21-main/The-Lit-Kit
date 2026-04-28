@@ -61,7 +61,7 @@
       --dark: #1a1a1a;
       --border: #e0e0e0;
       --input-border: #c8c8c8;
-      --bg: #ffffff;
+      --bg: white;
     }
 
     html, body { height: 100%; }
@@ -105,7 +105,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 60px 70px;
+      padding: 30px 70px;
     }
 
     .form-wrap {
@@ -210,11 +210,8 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: #f0ece6;
-      color: #aaa;
-      font-family: 'EB Garamond', Georgia, serif;
-      font-size: 1.3rem;
-      letter-spacing: 0.08em;
+      background: white;
+      
     }
   </style>
 </head>
@@ -289,7 +286,7 @@
     </div>
 
     <!-- image goes here on the right -->
-    <div class="split-right"><img src="../../images/librairie-romantique-1600.jpg" style="width:100%;"></div>
+    <div class="split-right"><img src="../../images/librairie-romantique-1600.jpg" style="width:80%;"></div>
 
   </div>
   <script>

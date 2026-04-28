@@ -45,14 +45,20 @@ $g3 = $user_genres[2] ?? "None Selected";
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Account | The Lit Kit</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=EB+Garamond&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../../css/main.css">
-<link rel="stylesheet" href="../../css/style.css">
+
+<!--links for fonts and style sheet-->
+    <link rel="stylesheet" href="/CS4347DatabaseProject/cs4347Project/css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Junge&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=EB+Garamond&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/c00cc4f5f4.js" crossorigin="anonymous"></script>
+    <!---->
 </head>
 
 <body>
 
-<!-- HEADER -->
+<!-- HEADER 
 <header class="top-bar">
     <div style="width:200px;"></div>
 
@@ -63,24 +69,25 @@ $g3 = $user_genres[2] ?? "None Selected";
     </div>
 </header>
 
-<!-- NAV -->
- <!--
-< ?php include '../common/nav.php'; ?> -->
+
+ 
+
 <nav>
     <a href="mainPage.php">Home</a>
     <a href="book_rec.php">My Books</a>
     <a href="user_account.php">Account</a>
 </nav>
 
-
+-->
+<?php include '../common/nav.php'; ?> 
 
 <!-- MAIN CONTENT -->
 <main>
-
-    <div class="div-border">
+<div class="card-background">
+    <div class="div-border-long">
 
         <h1>Account Details</h1>
-
+        <div class="form-text">
         <h3>Name</h3>
         <input type="text"
                value="<?php echo htmlspecialchars($userInfo['FName'] . ' ' . $userInfo['LName']); ?>"
@@ -101,7 +108,7 @@ $g3 = $user_genres[2] ?? "None Selected";
 
         <h3>Third Choice</h3>
         <input type="text" value="<?php echo htmlspecialchars($g3); ?>" readonly>
-
+</div>
         <div class="div-button">
             <a href="update_account.php">
                 <button type="button">Edit Account</button>
@@ -109,7 +116,7 @@ $g3 = $user_genres[2] ?? "None Selected";
         </div>
 
     </div>
-
+</div>
 </main>
 
 </body>

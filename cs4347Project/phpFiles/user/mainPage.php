@@ -27,13 +27,20 @@
   <title>The Lit Kit</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=EB+Garamond:wght@400;500&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="/cs4347DATABASEPROJECT/cs4347Project/css/main.css">
+  <!--links for fonts and style sheet-->
+    <link rel="stylesheet" href="/CS4347DatabaseProject/cs4347Project/css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Junge&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/c00cc4f5f4.js" crossorigin="anonymous"></script>
+    <!---->
 </head>
 <body>
-
-  <!-- logo and welcome at the top -->
+  <?php include '../common/nav.php'; ?> 
+  <!-- logo and welcome at the top 
  <header class="top-bar">
     <div style="width:200px">
-        <?php
+        < ?php
           if (isset($_SESSION['fname'])) {
             echo "<span class='welcome'>Welcome, " . $_SESSION['fname'] . "</span>";
           }
@@ -43,7 +50,7 @@
     <span class="logo-text">The Lit Kit</span>
 
     <div style="width:200px; text-align:right;">
-        <?php
+        < ?php
             if (isset($_SESSION['user_id'])) {
                 echo "<a href='logout.php' class='sign-in'>Logout</a>";
             }
@@ -51,13 +58,13 @@
     </div>
 </header>
 
-  <!-- nav links -->
+
   <nav>
     <a href="mainPage.php">Home</a>
     <a href="book_rec.php">My Books</a>
     <a href="user_account.php">Account</a>
   </nav>
-
+-->
   <!-- main section of the page -->
   <main class="hero">
     <div class="hero-center">

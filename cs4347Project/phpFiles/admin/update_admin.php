@@ -41,15 +41,22 @@ $admin_data = $stmt->get_result()->fetch_assoc();
 <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>The Lit Kit</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=EB+Garamond:wght@400;500&display=swap" rel="stylesheet"/>
+    <!--links for fonts and style sheet-->
+    <!--links for fonts and style sheet-->
     <link rel="stylesheet" href="/CS4347DatabaseProject/cs4347Project/css/style.css">
-    <link rel="stylesheet" href="/CS4347DatabaseProject/cs4347Project/css/main.css">
-
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Junge&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=EB+Garamond:wght@400;500&display=swap" rel="stylesheet"/>
+    <script src="https://kit.fontawesome.com/c00cc4f5f4.js" crossorigin="anonymous"></script>
+    <!---->
+    <!---->
+    
 </head>
 
 <body>
-
-<!-- HEADER -->
+<?php include '../common/nav.php'; ?> 
+<!-- HEADER 
 <header class="top-bar">
     <div style="width:200px;"></div>
 
@@ -60,18 +67,20 @@ $admin_data = $stmt->get_result()->fetch_assoc();
     </div>
 </header>
 
-<!-- NAV -->
+
 <nav>
     <a href="adminMainPage.php">Home</a>
     <a href="manage_books.php">Books Inventory</a>
     <a href="admin_account.php">Account</a>
 </nav>
-
+-->
+<div class="card-background">
+    
 
     <!--div for editing account details-->
     <form action="update_admin.php" method = "POST" class="div-border">
         <h1>Edit Account Details</h1>
-
+        <div class="form-text">
         <!--Replace placeholders with user name, email, pref etc once connected to db-->
         <?php if(isset($error)) echo "<p style='color:red;'>$error</p>"; ?>
 
@@ -84,11 +93,13 @@ $admin_data = $stmt->get_result()->fetch_assoc();
         <label for="email">Email Address:</label>
         <input type="text" name = "Email"  id="Email" value="<?php echo htmlspecialchars($admin_data['Email']);?>" required>
     
-       
+</div>
             <div class="div-button">
                 <button type = "submit">Update Account</button>
             </div>
     </form>
+
+</div>
     
 </body>
 <footer></footer>
