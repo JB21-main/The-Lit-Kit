@@ -1,1 +1,1 @@
-# CS4347DatabaseProject
+# The Lit Kit
