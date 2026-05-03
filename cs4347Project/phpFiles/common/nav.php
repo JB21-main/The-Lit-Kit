@@ -29,7 +29,9 @@ $current = basename($_SERVER['PHP_SELF']);
             <a class="nav-a <?= $current === 'admin_account.php' ? 'active' : '' ?>"  href="../admin/admin_account.php">Account</a>
         <?php else: ?>
             <a class="nav-a <?= $current === 'mainPage.php' ? 'active' : '' ?>" href="../user/mainPage.php">Home</a>
-            <a class="nav-a <?= $current === 'book_rec.php' ? 'active' : '' ?>" href="../user/book_rec.php">My Books</a>
+            <a class="nav-a <?= $current === 'book_rec.php' ? 'active' : '' ?>" href="../user/book_rec.php">Recommendations</a>
+            <a class="nav-a <?= $current === 'user_book_search.php' ? 'active' : '' ?>" href="../user/user_book_search.php">Book Search</a>
+            <a class="nav-a <?= $current === 'user_books.php' ? 'active' : '' ?>" href="../user/user_books.php">My Books</a>
             <a class="nav-a <?= $current === 'user_account.php' ? 'active' : '' ?>" href="../user/user_account.php">Account</a>
         <?php endif; ?>
     </nav>
